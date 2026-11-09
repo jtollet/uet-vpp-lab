@@ -1,0 +1,6 @@
+The lab scripts and documentation are provided under the MIT license.
+The UET plugin trace additions and application patch derive from the public
+Ultra Ethernet Consortium reference implementation (MIT; see LICENSES/MIT-UEC.txt).
+The nsim trace patch derives from FD.io VPP (Apache-2.0; see LICENSES/Apache-2.0.txt).
+Upstream organizational copyright and license notices are retained.
+The upstream transport library and NIC shim are not redistributed here.

@@ -1,0 +1,2511 @@
+{
+  "machine": "x86_64",
+  "kernel": "7.0.0-38-generic",
+  "runs": [
+    {
+      "settings": {
+        "case": "1794218688706228728-loss-0-pulse-0-mtu-1500-delay-0.1-0-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 4096,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "reverse_nsim_command": null,
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "background_commands": [],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.20783087005838752,
+            "directory": "live/0000-0.208s"
+          },
+          {
+            "elapsed_seconds": 0.41530272271484137,
+            "directory": "live/0001-0.415s"
+          },
+          {
+            "elapsed_seconds": 0.6226670909672976,
+            "directory": "live/0002-0.623s"
+          },
+          {
+            "elapsed_seconds": 0.8300209799781442,
+            "directory": "live/0003-0.830s"
+          },
+          {
+            "elapsed_seconds": 1.0372339929454029,
+            "directory": "live/0004-1.037s"
+          },
+          {
+            "elapsed_seconds": 1.2441844479180872,
+            "directory": "live/0005-1.244s"
+          },
+          {
+            "elapsed_seconds": 1.451632774900645,
+            "directory": "live/0006-1.452s"
+          },
+          {
+            "elapsed_seconds": 1.6590140010230243,
+            "directory": "live/0007-1.659s"
+          },
+          {
+            "elapsed_seconds": 1.8662413069978356,
+            "directory": "live/0008-1.866s"
+          },
+          {
+            "elapsed_seconds": 2.0736255696974695,
+            "directory": "live/0009-2.074s"
+          },
+          {
+            "elapsed_seconds": 2.2810820918530226,
+            "directory": "live/0010-2.281s"
+          },
+          {
+            "elapsed_seconds": 2.4882934680208564,
+            "directory": "live/0011-2.488s"
+          },
+          {
+            "elapsed_seconds": 2.6957343849353492,
+            "directory": "live/0012-2.696s"
+          },
+          {
+            "elapsed_seconds": 2.903007528744638,
+            "directory": "live/0013-2.903s"
+          },
+          {
+            "elapsed_seconds": 3.1104294760152698,
+            "directory": "live/0014-3.110s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.237374087795615,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218688706228728-loss-0-pulse-0-mtu-1500-delay-0.1-0-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {},
+      "selected": {},
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "reorder-control"
+    },
+    {
+      "settings": {
+        "case": "1794218692331922773-loss-0-pulse-0-mtu-1500-delay-0.1-0-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 reorder-fraction 0.25 reorder-delay 1 ms drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 4096,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "reverse_nsim_command": null,
+        "deadline_seconds": 90,
+        "reorder_fraction": 0.25,
+        "reorder_delay_ms": 1.0,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "background_commands": [],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.20762414718046784,
+            "directory": "live/0000-0.208s"
+          },
+          {
+            "elapsed_seconds": 0.41610303428024054,
+            "directory": "live/0001-0.416s"
+          },
+          {
+            "elapsed_seconds": 0.6234407708980143,
+            "directory": "live/0002-0.623s"
+          },
+          {
+            "elapsed_seconds": 0.8310501291416585,
+            "directory": "live/0003-0.831s"
+          },
+          {
+            "elapsed_seconds": 1.0384740820154548,
+            "directory": "live/0004-1.038s"
+          },
+          {
+            "elapsed_seconds": 1.2455666861496866,
+            "directory": "live/0005-1.246s"
+          },
+          {
+            "elapsed_seconds": 1.4529175469651818,
+            "directory": "live/0006-1.453s"
+          },
+          {
+            "elapsed_seconds": 1.6602065390907228,
+            "directory": "live/0007-1.660s"
+          },
+          {
+            "elapsed_seconds": 1.867491614073515,
+            "directory": "live/0008-1.867s"
+          },
+          {
+            "elapsed_seconds": 2.0746844531968236,
+            "directory": "live/0009-2.075s"
+          },
+          {
+            "elapsed_seconds": 2.281754673924297,
+            "directory": "live/0010-2.282s"
+          },
+          {
+            "elapsed_seconds": 2.4890806288458407,
+            "directory": "live/0011-2.489s"
+          },
+          {
+            "elapsed_seconds": 2.696469148155302,
+            "directory": "live/0012-2.696s"
+          },
+          {
+            "elapsed_seconds": 2.903864147141576,
+            "directory": "live/0013-2.904s"
+          },
+          {
+            "elapsed_seconds": 3.1108997059054673,
+            "directory": "live/0014-3.111s"
+          },
+          {
+            "elapsed_seconds": 3.3180187311954796,
+            "directory": "live/0015-3.318s"
+          },
+          {
+            "elapsed_seconds": 3.5255321911536157,
+            "directory": "live/0016-3.526s"
+          },
+          {
+            "elapsed_seconds": 3.7328697270713747,
+            "directory": "live/0017-3.733s"
+          },
+          {
+            "elapsed_seconds": 3.9402020778506994,
+            "directory": "live/0018-3.940s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 4.1275078360922635,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218692331922773-loss-0-pulse-0-mtu-1500-delay-0.1-0-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 100,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {},
+      "selected": {
+        "reordered_arrivals": [
+          {
+            "source": "198.18.0.1",
+            "destination": "198.18.0.2",
+            "kind": "ROD_REQ",
+            "trace": "\n00:00:06:109018: memif-input\n  memif: hw_if_index 1 next-index 4\n    slot: ring 0\n00:00:06:109019: ethernet-input\n  IP4: 02:00:00:00:00:01 -> 02:00:00:00:00:02\n00:00:06:109019: ip4-input\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109019: ip4-lookup\n  fib 0 dpo-idx 7 flow hash: 0x00000000\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109019: ip4-receive\n    fib:0 adj:7 flow:0x00000000\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109019: uet4-ip-input\n  UET RX: worker 1 ip4/native length 1108 sw_if_index 1 id 4294967602 segments 1 next 0 disposition delivered\n  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ flags 0x0c RETX 0 SPDCID 65 PDC-info 0x0003 SYN 1 PSN 1954782285\n",
+            "retx": 0,
+            "spdcid": 65,
+            "dpdcid": null,
+            "psn": 1954782285,
+            "cack_psn": null,
+            "nodes": [
+              [
+                "memif-input",
+                6109018
+              ],
+              [
+                "ethernet-input",
+                6109019
+              ],
+              [
+                "ip4-input",
+                6109019
+              ],
+              [
+                "ip4-lookup",
+                6109019
+              ],
+              [
+                "ip4-receive",
+                6109019
+              ],
+              [
+                "uet4-ip-input",
+                6109019
+              ]
+            ]
+          },
+          {
+            "source": "198.18.0.1",
+            "destination": "198.18.0.2",
+            "kind": "ROD_REQ",
+            "trace": "\n00:00:06:109249: memif-input\n  memif: hw_if_index 1 next-index 4\n    slot: ring 0\n00:00:06:109249: ethernet-input\n  IP4: 02:00:00:00:00:01 -> 02:00:00:00:00:02\n00:00:06:109249: ip4-input\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109250: ip4-lookup\n  fib 0 dpo-idx 7 flow hash: 0x00000000\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109250: ip4-receive\n    fib:0 adj:7 flow:0x00000000\n  EXP1: 198.18.0.1 -> 198.18.0.2\n    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:06:109250: uet4-ip-input\n  UET RX: worker 1 ip4/native length 1108 sw_if_index 1 id 4294967603 segments 1 next 0 disposition delivered\n  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ flags 0x04 RETX 0 SPDCID 65 PDC-info 0x0000 SYN 1 PSN 1954782282\n",
+            "retx": 0,
+            "spdcid": 65,
+            "dpdcid": null,
+            "psn": 1954782282,
+            "cack_psn": null,
+            "nodes": [
+              [
+                "memif-input",
+                6109249
+              ],
+              [
+                "ethernet-input",
+                6109249
+              ],
+              [
+                "ip4-input",
+                6109249
+              ],
+              [
+                "ip4-lookup",
+                6109250
+              ],
+              [
+                "ip4-receive",
+                6109250
+              ],
+              [
+                "uet4-ip-input",
+                6109250
+              ]
+            ]
+          }
+        ]
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 12,
+          "bad_generation": 12
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 43,
+      "name": "reorder"
+    },
+    {
+      "settings": {
+        "case": "1794218696866408221-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "background_commands": [],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.2077626222744584,
+            "directory": "live/0000-0.208s"
+          },
+          {
+            "elapsed_seconds": 0.4161651283502579,
+            "directory": "live/0001-0.416s"
+          },
+          {
+            "elapsed_seconds": 0.6232662382535636,
+            "directory": "live/0002-0.623s"
+          },
+          {
+            "elapsed_seconds": 0.8299634731374681,
+            "directory": "live/0003-0.830s"
+          },
+          {
+            "elapsed_seconds": 1.0373829393647611,
+            "directory": "live/0004-1.037s"
+          },
+          {
+            "elapsed_seconds": 1.2444415129721165,
+            "directory": "live/0005-1.244s"
+          },
+          {
+            "elapsed_seconds": 1.4519835491664708,
+            "directory": "live/0006-1.452s"
+          },
+          {
+            "elapsed_seconds": 1.659087319392711,
+            "directory": "live/0007-1.659s"
+          },
+          {
+            "elapsed_seconds": 1.8661025729961693,
+            "directory": "live/0008-1.866s"
+          },
+          {
+            "elapsed_seconds": 2.0735671119764447,
+            "directory": "live/0009-2.074s"
+          },
+          {
+            "elapsed_seconds": 2.2809653603471816,
+            "directory": "live/0010-2.281s"
+          },
+          {
+            "elapsed_seconds": 2.488239283207804,
+            "directory": "live/0011-2.488s"
+          },
+          {
+            "elapsed_seconds": 2.695517580024898,
+            "directory": "live/0012-2.696s"
+          },
+          {
+            "elapsed_seconds": 2.9027548311278224,
+            "directory": "live/0013-2.903s"
+          },
+          {
+            "elapsed_seconds": 3.1100961794145405,
+            "directory": "live/0014-3.110s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.277277230285108,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218696866408221-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 403,
+          "max": 411
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 699.0,
+          "p95": 700,
+          "max": 772
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:10:641587: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 1 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1633327436 ACK-offset-or-probe 0x0000\n00:00:10:641998: nsim-wheel\n  NSIM: tx at 10.887784 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1633327436,
+          "nodes": [
+            [
+              "uet-input",
+              10641587
+            ],
+            [
+              "nsim-wheel",
+              10641998
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:10:680420: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 96 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 2145471730\n00:00:10:680422: ip4-lookup\n  fib 0 dpo-idx 2 flow hash: 0x00000000\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 64, length 148, checksum 0xad45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:10:680422: ip4-rewrite\n  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.1 memif1/0: mtu:1500 next:3 flags:[] 0200000000010200000000020800 flow hash: 0x00000000\n00:00:10:680422: memif1/0-output\n  memif1/0 flags 0x01080001\n  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 63, length 148, checksum 0xae45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:10:680422: nsim-output-feature\n  NSIM: tx time 10.926283 sw_if_index 1\n00:00:10:681192: nsim-wheel\n  NSIM: tx at 10.926953 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 2145471730,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              10680420
+            ],
+            [
+              "ip4-lookup",
+              10680422
+            ],
+            [
+              "ip4-rewrite",
+              10680422
+            ],
+            [
+              "memif1/0-output",
+              10680422
+            ],
+            [
+              "nsim-output-feature",
+              10680422
+            ],
+            [
+              "nsim-wheel",
+              10681192
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-quiet-1"
+    },
+    {
+      "settings": {
+        "case": "1794218700469823124-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 0,
+        "background_commands": [
+          "create packet-generator interface pg0 hw-addr 02:00:00:00:10:01",
+          "set interface state pg0 up",
+          "set interface ip address pg0 198.19.0.1/30",
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218700469823124-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.3330878410488367,
+            "directory": "live/0000-0.333s"
+          },
+          {
+            "elapsed_seconds": 0.5404370813630521,
+            "directory": "live/0001-0.540s"
+          },
+          {
+            "elapsed_seconds": 0.7478301981464028,
+            "directory": "live/0002-0.748s"
+          },
+          {
+            "elapsed_seconds": 0.9545715553686023,
+            "directory": "live/0003-0.955s"
+          },
+          {
+            "elapsed_seconds": 1.1613138183020055,
+            "directory": "live/0004-1.161s"
+          },
+          {
+            "elapsed_seconds": 1.3683268232271075,
+            "directory": "live/0005-1.368s"
+          },
+          {
+            "elapsed_seconds": 1.5750305652618408,
+            "directory": "live/0006-1.575s"
+          },
+          {
+            "elapsed_seconds": 1.7817007023841143,
+            "directory": "live/0007-1.782s"
+          },
+          {
+            "elapsed_seconds": 1.9884195420891047,
+            "directory": "live/0008-1.988s"
+          },
+          {
+            "elapsed_seconds": 2.1951017631217837,
+            "directory": "live/0009-2.195s"
+          },
+          {
+            "elapsed_seconds": 2.401316582225263,
+            "directory": "live/0010-2.401s"
+          },
+          {
+            "elapsed_seconds": 2.6075010523200035,
+            "directory": "live/0011-2.608s"
+          },
+          {
+            "elapsed_seconds": 2.8143151099793613,
+            "directory": "live/0012-2.814s"
+          },
+          {
+            "elapsed_seconds": 3.021036402322352,
+            "directory": "live/0013-3.021s"
+          },
+          {
+            "elapsed_seconds": 3.227887067012489,
+            "directory": "live/0014-3.228s"
+          },
+          {
+            "elapsed_seconds": 3.4346331893466413,
+            "directory": "live/0015-3.435s"
+          },
+          {
+            "elapsed_seconds": 3.6410817191936076,
+            "directory": "live/0016-3.641s"
+          },
+          {
+            "elapsed_seconds": 3.847773800138384,
+            "directory": "live/0017-3.848s"
+          },
+          {
+            "elapsed_seconds": 4.054392964113504,
+            "directory": "live/0018-4.054s"
+          },
+          {
+            "elapsed_seconds": 4.261008060071617,
+            "directory": "live/0019-4.261s"
+          },
+          {
+            "elapsed_seconds": 4.467675667256117,
+            "directory": "live/0020-4.468s"
+          },
+          {
+            "elapsed_seconds": 4.674465451389551,
+            "directory": "live/0021-4.674s"
+          },
+          {
+            "elapsed_seconds": 4.881248928140849,
+            "directory": "live/0022-4.881s"
+          },
+          {
+            "elapsed_seconds": 5.087811711244285,
+            "directory": "live/0023-5.088s"
+          },
+          {
+            "elapsed_seconds": 5.294517389964312,
+            "directory": "live/0024-5.295s"
+          },
+          {
+            "elapsed_seconds": 5.501662306021899,
+            "directory": "live/0025-5.502s"
+          },
+          {
+            "elapsed_seconds": 5.708536958321929,
+            "directory": "live/0026-5.709s"
+          },
+          {
+            "elapsed_seconds": 5.915449627209455,
+            "directory": "live/0027-5.915s"
+          },
+          {
+            "elapsed_seconds": 6.121819880325347,
+            "directory": "live/0028-6.122s"
+          },
+          {
+            "elapsed_seconds": 6.3283967091701925,
+            "directory": "live/0029-6.328s"
+          },
+          {
+            "elapsed_seconds": 6.534904678352177,
+            "directory": "live/0030-6.535s"
+          },
+          {
+            "elapsed_seconds": 6.741521231364459,
+            "directory": "live/0031-6.742s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 6.887874150183052,
+        "pds_retransmit_warning_lines": {
+          "client": 626,
+          "server": 1048
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218700469823124-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 12529,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 121,
+          "median": 20044,
+          "p95": 20097,
+          "max": 20308
+        },
+        "ROD_REQ": {
+          "count": 121,
+          "median": 20043,
+          "p95": 20098,
+          "max": 20102
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:16:029537: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 555 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1494962252 ACK-offset-or-probe 0x0000\n00:00:16:049845: nsim-wheel\n  NSIM: tx at 16.295258 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1494962252,
+          "nodes": [
+            [
+              "uet-input",
+              16029537
+            ],
+            [
+              "nsim-wheel",
+              16049845
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:17:102605: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 909 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x18 RETX 1 SPDCID 66 DPDCID 66 PSN 1494962270\n00:00:17:122707: nsim-wheel\n  NSIM: tx at 17.368120 next_index 0\n",
+          "retx": 1,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1494962270,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              17102605
+            ],
+            [
+              "nsim-wheel",
+              17122707
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-loaded-1"
+    },
+    {
+      "settings": {
+        "case": "1794218708056179568-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 6.0,
+        "background_commands": [
+          "policer add name background type 1r2c rate kbps cir 6000 cb 6000 conform-action transmit exceed-action drop violate-action drop",
+          "policer input name background pg0",
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218708056179568-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.33014229591935873,
+            "directory": "live/0000-0.330s"
+          },
+          {
+            "elapsed_seconds": 0.5374200940132141,
+            "directory": "live/0001-0.537s"
+          },
+          {
+            "elapsed_seconds": 0.7446931861341,
+            "directory": "live/0002-0.745s"
+          },
+          {
+            "elapsed_seconds": 0.9517696867696941,
+            "directory": "live/0003-0.952s"
+          },
+          {
+            "elapsed_seconds": 1.1587483128532767,
+            "directory": "live/0004-1.159s"
+          },
+          {
+            "elapsed_seconds": 1.3658453430980444,
+            "directory": "live/0005-1.366s"
+          },
+          {
+            "elapsed_seconds": 1.5735623817890882,
+            "directory": "live/0006-1.574s"
+          },
+          {
+            "elapsed_seconds": 1.7808636156842113,
+            "directory": "live/0007-1.781s"
+          },
+          {
+            "elapsed_seconds": 1.9882131237536669,
+            "directory": "live/0008-1.988s"
+          },
+          {
+            "elapsed_seconds": 2.1954905237071216,
+            "directory": "live/0009-2.195s"
+          },
+          {
+            "elapsed_seconds": 2.40272022690624,
+            "directory": "live/0010-2.403s"
+          },
+          {
+            "elapsed_seconds": 2.6099607991054654,
+            "directory": "live/0011-2.610s"
+          },
+          {
+            "elapsed_seconds": 2.8170928778126836,
+            "directory": "live/0012-2.817s"
+          },
+          {
+            "elapsed_seconds": 3.0240568150766194,
+            "directory": "live/0013-3.024s"
+          },
+          {
+            "elapsed_seconds": 3.231337323784828,
+            "directory": "live/0014-3.231s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.398475730791688,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218708056179568-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 403.0,
+          "p95": 511,
+          "max": 767
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 699.5,
+          "p95": 808,
+          "max": 1000
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:21:987098: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 89 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 856887110 ACK-offset-or-probe 0x0000\n00:00:21:987865: nsim-wheel\n  NSIM: tx at 22.220560 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 856887110,
+          "nodes": [
+            [
+              "uet-input",
+              21987098
+            ],
+            [
+              "nsim-wheel",
+              21987865
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:21:980901: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 76 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 856887103\n00:00:21:981901: nsim-wheel\n  NSIM: tx at 22.214600 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 856887103,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              21980901
+            ],
+            [
+              "nsim-wheel",
+              21981901
+            ]
+          ]
+        }
+      },
+      "policer_packets": {
+        "conform": 1675,
+        "exceed": 0,
+        "violate": 15208
+      },
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-policed-1"
+    },
+    {
+      "settings": {
+        "case": "1794218711992475861-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "background_commands": [],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.20746926916763186,
+            "directory": "live/0000-0.207s"
+          },
+          {
+            "elapsed_seconds": 0.4147702599875629,
+            "directory": "live/0001-0.415s"
+          },
+          {
+            "elapsed_seconds": 0.6222668457776308,
+            "directory": "live/0002-0.622s"
+          },
+          {
+            "elapsed_seconds": 0.8295788820832968,
+            "directory": "live/0003-0.830s"
+          },
+          {
+            "elapsed_seconds": 1.0369911538437009,
+            "directory": "live/0004-1.037s"
+          },
+          {
+            "elapsed_seconds": 1.24446380417794,
+            "directory": "live/0005-1.244s"
+          },
+          {
+            "elapsed_seconds": 1.4518311750143766,
+            "directory": "live/0006-1.452s"
+          },
+          {
+            "elapsed_seconds": 1.659010929055512,
+            "directory": "live/0007-1.659s"
+          },
+          {
+            "elapsed_seconds": 1.8662724569439888,
+            "directory": "live/0008-1.866s"
+          },
+          {
+            "elapsed_seconds": 2.0734563441947103,
+            "directory": "live/0009-2.073s"
+          },
+          {
+            "elapsed_seconds": 2.280371143016964,
+            "directory": "live/0010-2.280s"
+          },
+          {
+            "elapsed_seconds": 2.487591609824449,
+            "directory": "live/0011-2.488s"
+          },
+          {
+            "elapsed_seconds": 2.6947195599786937,
+            "directory": "live/0012-2.695s"
+          },
+          {
+            "elapsed_seconds": 2.902030719909817,
+            "directory": "live/0013-2.902s"
+          },
+          {
+            "elapsed_seconds": 3.1095132301561534,
+            "directory": "live/0014-3.110s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.276590979192406,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218711992475861-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 401.0,
+          "p95": 402,
+          "max": 411
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 698.0,
+          "p95": 699,
+          "max": 699
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:25:793880: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 97 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1324729553 ACK-offset-or-probe 0x0000\n00:00:25:794291: nsim-wheel\n  NSIM: tx at 26.026578 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1324729553,
+          "nodes": [
+            [
+              "uet-input",
+              25793880
+            ],
+            [
+              "nsim-wheel",
+              25794291
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:25:756963: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 8 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 1324729508\n00:00:25:756964: ip4-lookup\n  fib 0 dpo-idx 2 flow hash: 0x00000000\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 64, length 148, checksum 0xad45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:25:756964: ip4-rewrite\n  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.1 memif1/0: mtu:1500 next:3 flags:[] 0200000000010200000000020800 flow hash: 0x00000000\n00:00:25:756964: memif1/0-output\n  memif1/0 flags 0x01080001\n  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 63, length 148, checksum 0xae45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:25:756964: nsim-output-feature\n  NSIM: tx time 25.989351 sw_if_index 1\n00:00:25:757662: nsim-wheel\n  NSIM: tx at 25.989949 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1324729508,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              25756963
+            ],
+            [
+              "ip4-lookup",
+              25756964
+            ],
+            [
+              "ip4-rewrite",
+              25756964
+            ],
+            [
+              "memif1/0-output",
+              25756964
+            ],
+            [
+              "nsim-output-feature",
+              25756964
+            ],
+            [
+              "nsim-wheel",
+              25757662
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-quiet-2"
+    },
+    {
+      "settings": {
+        "case": "1794218715585977822-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 0,
+        "background_commands": [
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218715585977822-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.32433620607480407,
+            "directory": "live/0000-0.324s"
+          },
+          {
+            "elapsed_seconds": 0.5318438373506069,
+            "directory": "live/0001-0.532s"
+          },
+          {
+            "elapsed_seconds": 0.7391417631879449,
+            "directory": "live/0002-0.739s"
+          },
+          {
+            "elapsed_seconds": 0.9465629821643233,
+            "directory": "live/0003-0.947s"
+          },
+          {
+            "elapsed_seconds": 1.1540170321241021,
+            "directory": "live/0004-1.154s"
+          },
+          {
+            "elapsed_seconds": 1.3613168559968472,
+            "directory": "live/0005-1.361s"
+          },
+          {
+            "elapsed_seconds": 1.5699422280304134,
+            "directory": "live/0006-1.570s"
+          },
+          {
+            "elapsed_seconds": 1.7773593082092702,
+            "directory": "live/0007-1.777s"
+          },
+          {
+            "elapsed_seconds": 1.9846716243773699,
+            "directory": "live/0008-1.985s"
+          },
+          {
+            "elapsed_seconds": 2.1919896681793034,
+            "directory": "live/0009-2.192s"
+          },
+          {
+            "elapsed_seconds": 2.3994457232765853,
+            "directory": "live/0010-2.399s"
+          },
+          {
+            "elapsed_seconds": 2.6068229023367167,
+            "directory": "live/0011-2.607s"
+          },
+          {
+            "elapsed_seconds": 2.8141265884041786,
+            "directory": "live/0012-2.814s"
+          },
+          {
+            "elapsed_seconds": 3.021408735308796,
+            "directory": "live/0013-3.021s"
+          },
+          {
+            "elapsed_seconds": 3.228747093118727,
+            "directory": "live/0014-3.229s"
+          },
+          {
+            "elapsed_seconds": 3.4361610519699752,
+            "directory": "live/0015-3.436s"
+          },
+          {
+            "elapsed_seconds": 3.643392832018435,
+            "directory": "live/0016-3.643s"
+          },
+          {
+            "elapsed_seconds": 3.850543257314712,
+            "directory": "live/0017-3.851s"
+          },
+          {
+            "elapsed_seconds": 4.057861419394612,
+            "directory": "live/0018-4.058s"
+          },
+          {
+            "elapsed_seconds": 4.265178486239165,
+            "directory": "live/0019-4.265s"
+          },
+          {
+            "elapsed_seconds": 4.472464327234775,
+            "directory": "live/0020-4.472s"
+          },
+          {
+            "elapsed_seconds": 4.679801806341857,
+            "directory": "live/0021-4.680s"
+          },
+          {
+            "elapsed_seconds": 4.8870097710751,
+            "directory": "live/0022-4.887s"
+          },
+          {
+            "elapsed_seconds": 5.094543979968876,
+            "directory": "live/0023-5.095s"
+          },
+          {
+            "elapsed_seconds": 5.3019858142361045,
+            "directory": "live/0024-5.302s"
+          },
+          {
+            "elapsed_seconds": 5.509297707118094,
+            "directory": "live/0025-5.509s"
+          },
+          {
+            "elapsed_seconds": 5.716597237158567,
+            "directory": "live/0026-5.717s"
+          },
+          {
+            "elapsed_seconds": 5.923972411081195,
+            "directory": "live/0027-5.924s"
+          },
+          {
+            "elapsed_seconds": 6.131346165202558,
+            "directory": "live/0028-6.131s"
+          },
+          {
+            "elapsed_seconds": 6.338733938988298,
+            "directory": "live/0029-6.339s"
+          },
+          {
+            "elapsed_seconds": 6.546259719412774,
+            "directory": "live/0030-6.546s"
+          },
+          {
+            "elapsed_seconds": 6.753557712305337,
+            "directory": "live/0031-6.754s"
+          },
+          {
+            "elapsed_seconds": 6.9607986132614315,
+            "directory": "live/0032-6.961s"
+          },
+          {
+            "elapsed_seconds": 7.167991679161787,
+            "directory": "live/0033-7.168s"
+          },
+          {
+            "elapsed_seconds": 7.375367917120457,
+            "directory": "live/0034-7.375s"
+          },
+          {
+            "elapsed_seconds": 7.582603877410293,
+            "directory": "live/0035-7.583s"
+          },
+          {
+            "elapsed_seconds": 7.78981273714453,
+            "directory": "live/0036-7.790s"
+          },
+          {
+            "elapsed_seconds": 7.997042483184487,
+            "directory": "live/0037-7.997s"
+          },
+          {
+            "elapsed_seconds": 8.20430030208081,
+            "directory": "live/0038-8.204s"
+          },
+          {
+            "elapsed_seconds": 8.411673701368272,
+            "directory": "live/0039-8.412s"
+          },
+          {
+            "elapsed_seconds": 8.619177458342165,
+            "directory": "live/0040-8.619s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 8.706182879395783,
+        "pds_retransmit_warning_lines": {
+          "client": 811,
+          "server": 1408
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218715585977822-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 15940,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 137,
+          "median": 20034,
+          "p95": 20108,
+          "max": 20111
+        },
+        "ROD_REQ": {
+          "count": 134,
+          "median": 20034.5,
+          "p95": 20107,
+          "max": 20111
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:30:006974: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 151 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1594188437 ACK-offset-or-probe 0x0000\n00:00:30:027085: nsim-wheel\n  NSIM: tx at 30.244559 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1594188437,
+          "nodes": [
+            [
+              "uet-input",
+              30006974
+            ],
+            [
+              "nsim-wheel",
+              30027085
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:29:732038: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 73 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x18 RETX 1 SPDCID 66 DPDCID 66 PSN 1594188434\n00:00:29:752149: nsim-wheel\n  NSIM: tx at 29.969759 next_index 0\n",
+          "retx": 1,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1594188434,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              29732038
+            ],
+            [
+              "nsim-wheel",
+              29752149
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-loaded-2"
+    },
+    {
+      "settings": {
+        "case": "1794218725020679933-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 6.0,
+        "background_commands": [
+          "policer add name background type 1r2c rate kbps cir 6000 cb 6000 conform-action transmit exceed-action drop violate-action drop",
+          "policer input name background pg0",
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218725020679933-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.33003361616283655,
+            "directory": "live/0000-0.330s"
+          },
+          {
+            "elapsed_seconds": 0.53737314324826,
+            "directory": "live/0001-0.537s"
+          },
+          {
+            "elapsed_seconds": 0.7446349421516061,
+            "directory": "live/0002-0.745s"
+          },
+          {
+            "elapsed_seconds": 0.95215063681826,
+            "directory": "live/0003-0.952s"
+          },
+          {
+            "elapsed_seconds": 1.1594475731253624,
+            "directory": "live/0004-1.159s"
+          },
+          {
+            "elapsed_seconds": 1.3666508202441037,
+            "directory": "live/0005-1.367s"
+          },
+          {
+            "elapsed_seconds": 1.5740376021713018,
+            "directory": "live/0006-1.574s"
+          },
+          {
+            "elapsed_seconds": 1.7814517552033067,
+            "directory": "live/0007-1.781s"
+          },
+          {
+            "elapsed_seconds": 1.9886779990047216,
+            "directory": "live/0008-1.989s"
+          },
+          {
+            "elapsed_seconds": 2.1961101768538356,
+            "directory": "live/0009-2.196s"
+          },
+          {
+            "elapsed_seconds": 2.40342319291085,
+            "directory": "live/0010-2.403s"
+          },
+          {
+            "elapsed_seconds": 2.6108265928924084,
+            "directory": "live/0011-2.611s"
+          },
+          {
+            "elapsed_seconds": 2.818228033836931,
+            "directory": "live/0012-2.818s"
+          },
+          {
+            "elapsed_seconds": 3.0258256369270384,
+            "directory": "live/0013-3.026s"
+          },
+          {
+            "elapsed_seconds": 3.2332328208722174,
+            "directory": "live/0014-3.233s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.4007191131822765,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218725020679933-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 661,
+          "max": 693
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 699.5,
+          "p95": 958,
+          "max": 989
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:38:958011: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 103 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1953491634 ACK-offset-or-probe 0x0000\n00:00:38:958704: nsim-wheel\n  NSIM: tx at 39.174130 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1953491634,
+          "nodes": [
+            [
+              "uet-input",
+              38958011
+            ],
+            [
+              "nsim-wheel",
+              38958704
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:38:958015: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 104 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 1953491634\n00:00:38:958016: ip4-lookup\n  fib 0 dpo-idx 2 flow hash: 0x00000000\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 64, length 148, checksum 0xad45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:38:958016: ip4-rewrite\n  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.1 memif1/0: mtu:1500 next:3 flags:[] 0200000000010200000000020800 flow hash: 0x00000000\n00:00:38:958017: memif1/0-output\n  memif1/0 flags 0x01080001\n  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 63, length 148, checksum 0xae45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:38:958017: nsim-output-feature\n  NSIM: tx time 39.173543 sw_if_index 1\n00:00:38:959004: nsim-wheel\n  NSIM: tx at 39.174430 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1953491634,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              38958015
+            ],
+            [
+              "ip4-lookup",
+              38958016
+            ],
+            [
+              "ip4-rewrite",
+              38958016
+            ],
+            [
+              "memif1/0-output",
+              38958017
+            ],
+            [
+              "nsim-output-feature",
+              38958017
+            ],
+            [
+              "nsim-wheel",
+              38959004
+            ]
+          ]
+        }
+      },
+      "policer_packets": {
+        "conform": 1676,
+        "exceed": 0,
+        "violate": 15233
+      },
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-policed-2"
+    },
+    {
+      "settings": {
+        "case": "1794218728960180167-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "background_commands": [],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.20785483019426465,
+            "directory": "live/0000-0.208s"
+          },
+          {
+            "elapsed_seconds": 0.4151504500769079,
+            "directory": "live/0001-0.415s"
+          },
+          {
+            "elapsed_seconds": 0.6224559182301164,
+            "directory": "live/0002-0.622s"
+          },
+          {
+            "elapsed_seconds": 0.8293920089490712,
+            "directory": "live/0003-0.829s"
+          },
+          {
+            "elapsed_seconds": 1.036344762891531,
+            "directory": "live/0004-1.036s"
+          },
+          {
+            "elapsed_seconds": 1.2433623429387808,
+            "directory": "live/0005-1.243s"
+          },
+          {
+            "elapsed_seconds": 1.45085928728804,
+            "directory": "live/0006-1.451s"
+          },
+          {
+            "elapsed_seconds": 1.656560530886054,
+            "directory": "live/0007-1.657s"
+          },
+          {
+            "elapsed_seconds": 1.864045841153711,
+            "directory": "live/0008-1.864s"
+          },
+          {
+            "elapsed_seconds": 2.071473346091807,
+            "directory": "live/0009-2.071s"
+          },
+          {
+            "elapsed_seconds": 2.278818286024034,
+            "directory": "live/0010-2.279s"
+          },
+          {
+            "elapsed_seconds": 2.486086925957352,
+            "directory": "live/0011-2.486s"
+          },
+          {
+            "elapsed_seconds": 2.6933788689784706,
+            "directory": "live/0012-2.693s"
+          },
+          {
+            "elapsed_seconds": 2.900666286237538,
+            "directory": "live/0013-2.901s"
+          },
+          {
+            "elapsed_seconds": 3.107927557080984,
+            "directory": "live/0014-3.108s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.2750720982439816,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218728960180167-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 403,
+          "max": 473
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 699.0,
+          "p95": 700,
+          "max": 700
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:42:766491: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 93 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1699977921 ACK-offset-or-probe 0x0000\n00:00:42:766964: nsim-wheel\n  NSIM: tx at 42.982390 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1699977921,
+          "nodes": [
+            [
+              "uet-input",
+              42766491
+            ],
+            [
+              "nsim-wheel",
+              42766964
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:42:733589: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 14 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 1699977881\n00:00:42:733591: ip4-lookup\n  fib 0 dpo-idx 2 flow hash: 0x00000000\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 64, length 148, checksum 0xad45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:42:733591: ip4-rewrite\n  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.1 memif1/0: mtu:1500 next:3 flags:[] 0200000000010200000000020800 flow hash: 0x00000000\n00:00:42:733591: memif1/0-output\n  memif1/0 flags 0x01080001\n  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 63, length 148, checksum 0xae45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:00:42:733591: nsim-output-feature\n  NSIM: tx time 42.949118 sw_if_index 1\n00:00:42:734289: nsim-wheel\n  NSIM: tx at 42.949715 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1699977881,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              42733589
+            ],
+            [
+              "ip4-lookup",
+              42733591
+            ],
+            [
+              "ip4-rewrite",
+              42733591
+            ],
+            [
+              "memif1/0-output",
+              42733591
+            ],
+            [
+              "nsim-output-feature",
+              42733591
+            ],
+            [
+              "nsim-wheel",
+              42734289
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-quiet-3"
+    },
+    {
+      "settings": {
+        "case": "1794218732562544903-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 0,
+        "background_commands": [
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218732562544903-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.32415047427639365,
+            "directory": "live/0000-0.324s"
+          },
+          {
+            "elapsed_seconds": 0.5314219002611935,
+            "directory": "live/0001-0.531s"
+          },
+          {
+            "elapsed_seconds": 0.7385016311891377,
+            "directory": "live/0002-0.739s"
+          },
+          {
+            "elapsed_seconds": 0.9456607401371002,
+            "directory": "live/0003-0.946s"
+          },
+          {
+            "elapsed_seconds": 1.1524773170240223,
+            "directory": "live/0004-1.152s"
+          },
+          {
+            "elapsed_seconds": 1.3593370392918587,
+            "directory": "live/0005-1.359s"
+          },
+          {
+            "elapsed_seconds": 1.566776127088815,
+            "directory": "live/0006-1.567s"
+          },
+          {
+            "elapsed_seconds": 1.7740879263728857,
+            "directory": "live/0007-1.774s"
+          },
+          {
+            "elapsed_seconds": 1.9812574540264904,
+            "directory": "live/0008-1.981s"
+          },
+          {
+            "elapsed_seconds": 2.188460926990956,
+            "directory": "live/0009-2.188s"
+          },
+          {
+            "elapsed_seconds": 2.395737804006785,
+            "directory": "live/0010-2.396s"
+          },
+          {
+            "elapsed_seconds": 2.6031850683502853,
+            "directory": "live/0011-2.603s"
+          },
+          {
+            "elapsed_seconds": 2.8103346852585673,
+            "directory": "live/0012-2.810s"
+          },
+          {
+            "elapsed_seconds": 3.017510140314698,
+            "directory": "live/0013-3.018s"
+          },
+          {
+            "elapsed_seconds": 3.2246795231476426,
+            "directory": "live/0014-3.225s"
+          },
+          {
+            "elapsed_seconds": 3.4319542590528727,
+            "directory": "live/0015-3.432s"
+          },
+          {
+            "elapsed_seconds": 3.6388640250079334,
+            "directory": "live/0016-3.639s"
+          },
+          {
+            "elapsed_seconds": 3.8462267513386905,
+            "directory": "live/0017-3.846s"
+          },
+          {
+            "elapsed_seconds": 4.053302009124309,
+            "directory": "live/0018-4.053s"
+          },
+          {
+            "elapsed_seconds": 4.260586972348392,
+            "directory": "live/0019-4.261s"
+          },
+          {
+            "elapsed_seconds": 4.468056454323232,
+            "directory": "live/0020-4.468s"
+          },
+          {
+            "elapsed_seconds": 4.6753379623405635,
+            "directory": "live/0021-4.675s"
+          },
+          {
+            "elapsed_seconds": 4.8827128992415965,
+            "directory": "live/0022-4.883s"
+          },
+          {
+            "elapsed_seconds": 5.0901511730626225,
+            "directory": "live/0023-5.090s"
+          },
+          {
+            "elapsed_seconds": 5.297809433192015,
+            "directory": "live/0024-5.298s"
+          },
+          {
+            "elapsed_seconds": 5.505357938352972,
+            "directory": "live/0025-5.505s"
+          },
+          {
+            "elapsed_seconds": 5.712774119339883,
+            "directory": "live/0026-5.713s"
+          },
+          {
+            "elapsed_seconds": 5.920151108410209,
+            "directory": "live/0027-5.920s"
+          },
+          {
+            "elapsed_seconds": 6.127599284984171,
+            "directory": "live/0028-6.128s"
+          },
+          {
+            "elapsed_seconds": 6.334808445069939,
+            "directory": "live/0029-6.335s"
+          },
+          {
+            "elapsed_seconds": 6.542175997979939,
+            "directory": "live/0030-6.542s"
+          },
+          {
+            "elapsed_seconds": 6.7493597362190485,
+            "directory": "live/0031-6.749s"
+          },
+          {
+            "elapsed_seconds": 6.956752545200288,
+            "directory": "live/0032-6.957s"
+          },
+          {
+            "elapsed_seconds": 7.163965728133917,
+            "directory": "live/0033-7.164s"
+          },
+          {
+            "elapsed_seconds": 7.371249959338456,
+            "directory": "live/0034-7.371s"
+          },
+          {
+            "elapsed_seconds": 7.578603346366435,
+            "directory": "live/0035-7.579s"
+          },
+          {
+            "elapsed_seconds": 7.785830500070006,
+            "directory": "live/0036-7.786s"
+          },
+          {
+            "elapsed_seconds": 7.992427046410739,
+            "directory": "live/0037-7.992s"
+          },
+          {
+            "elapsed_seconds": 8.19903781497851,
+            "directory": "live/0038-8.199s"
+          },
+          {
+            "elapsed_seconds": 8.40634899912402,
+            "directory": "live/0039-8.406s"
+          },
+          {
+            "elapsed_seconds": 8.613869364373386,
+            "directory": "live/0040-8.614s"
+          },
+          {
+            "elapsed_seconds": 8.821086367126554,
+            "directory": "live/0041-8.821s"
+          },
+          {
+            "elapsed_seconds": 9.028346895240247,
+            "directory": "live/0042-9.028s"
+          },
+          {
+            "elapsed_seconds": 9.235736072063446,
+            "directory": "live/0043-9.236s"
+          },
+          {
+            "elapsed_seconds": 9.443139593116939,
+            "directory": "live/0044-9.443s"
+          },
+          {
+            "elapsed_seconds": 9.65049581695348,
+            "directory": "live/0045-9.650s"
+          },
+          {
+            "elapsed_seconds": 9.857707156334072,
+            "directory": "live/0046-9.858s"
+          },
+          {
+            "elapsed_seconds": 10.065059500280768,
+            "directory": "live/0047-10.065s"
+          },
+          {
+            "elapsed_seconds": 10.272294885013252,
+            "directory": "live/0048-10.272s"
+          },
+          {
+            "elapsed_seconds": 10.479466190095991,
+            "directory": "live/0049-10.479s"
+          },
+          {
+            "elapsed_seconds": 10.687049868982285,
+            "directory": "live/0050-10.687s"
+          },
+          {
+            "elapsed_seconds": 10.894286244176328,
+            "directory": "live/0051-10.894s"
+          },
+          {
+            "elapsed_seconds": 11.101590598002076,
+            "directory": "live/0052-11.102s"
+          },
+          {
+            "elapsed_seconds": 11.309008134994656,
+            "directory": "live/0053-11.309s"
+          },
+          {
+            "elapsed_seconds": 11.516423274297267,
+            "directory": "live/0054-11.516s"
+          },
+          {
+            "elapsed_seconds": 11.723884869366884,
+            "directory": "live/0055-11.724s"
+          },
+          {
+            "elapsed_seconds": 11.931114073377103,
+            "directory": "live/0056-11.931s"
+          },
+          {
+            "elapsed_seconds": 12.138157528359443,
+            "directory": "live/0057-12.138s"
+          },
+          {
+            "elapsed_seconds": 12.345559156965464,
+            "directory": "live/0058-12.346s"
+          },
+          {
+            "elapsed_seconds": 12.55287386616692,
+            "directory": "live/0059-12.553s"
+          },
+          {
+            "elapsed_seconds": 12.760217206086963,
+            "directory": "live/0060-12.760s"
+          },
+          {
+            "elapsed_seconds": 12.967504553962499,
+            "directory": "live/0061-12.968s"
+          },
+          {
+            "elapsed_seconds": 13.17473103897646,
+            "directory": "live/0062-13.175s"
+          },
+          {
+            "elapsed_seconds": 13.382138556335121,
+            "directory": "live/0063-13.382s"
+          },
+          {
+            "elapsed_seconds": 13.589640846010298,
+            "directory": "live/0064-13.590s"
+          },
+          {
+            "elapsed_seconds": 13.796890842262655,
+            "directory": "live/0065-13.797s"
+          },
+          {
+            "elapsed_seconds": 14.00426831934601,
+            "directory": "live/0066-14.004s"
+          },
+          {
+            "elapsed_seconds": 14.211498119402677,
+            "directory": "live/0067-14.211s"
+          },
+          {
+            "elapsed_seconds": 14.41879710694775,
+            "directory": "live/0068-14.419s"
+          },
+          {
+            "elapsed_seconds": 14.62621337827295,
+            "directory": "live/0069-14.626s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 14.793374969158322,
+        "pds_retransmit_warning_lines": {
+          "client": 1337,
+          "server": 2615
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218732562544903-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 27302,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 147,
+          "median": 20098,
+          "p95": 20107,
+          "max": 20280
+        },
+        "ROD_REQ": {
+          "count": 163,
+          "median": 20017,
+          "p95": 20107,
+          "max": 20108
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:00:57:483545: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 2641 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1341900322 ACK-offset-or-probe 0x0000\n00:00:57:503825: nsim-wheel\n  NSIM: tx at 57.682354 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 1341900322,
+          "nodes": [
+            [
+              "uet-input",
+              57483545
+            ],
+            [
+              "nsim-wheel",
+              57503825
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:00:46:858377: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 92 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x18 RETX 1 SPDCID 66 DPDCID 66 PSN 1341900265\n00:00:46:878485: nsim-wheel\n  NSIM: tx at 47.060318 next_index 0\n",
+          "retx": 1,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 1341900265,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              46858377
+            ],
+            [
+              "nsim-wheel",
+              46878485
+            ]
+          ]
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-loaded-3"
+    },
+    {
+      "settings": {
+        "case": "1794218748171831369-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5",
+        "application": "uet_demo",
+        "nsim_command": "set nsim delay 100 us bandwidth 1000 mbps packet-size 1500 drop-fraction 0.0",
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "iterations": 30,
+        "size": 64,
+        "pds": "pds",
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "reverse_nsim_command": "set nsim delay 100 us bandwidth 40 mbps packet-size 1500 buffer 20 ms drop-fraction 0",
+        "deadline_seconds": 90,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 6.0,
+        "background_commands": [
+          "policer add name background type 1r2c rate kbps cir 6000 cb 6000 conform-action transmit exceed-action drop violate-action drop",
+          "policer input name background pg0",
+          "packet-generator new name background source pg0 pcap /tmp/uet-obs-wdnor3e2/results/1794218748171831369-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5/background.pcap rate 5000 limit 100000000 worker 0",
+          "packet-generator enable-stream background"
+        ],
+        "outcome": "completed",
+        "terminated_by_harness": [],
+        "live_samples": [
+          {
+            "elapsed_seconds": 0.3299150001257658,
+            "directory": "live/0000-0.330s"
+          },
+          {
+            "elapsed_seconds": 0.5373262129724026,
+            "directory": "live/0001-0.537s"
+          },
+          {
+            "elapsed_seconds": 0.744683331809938,
+            "directory": "live/0002-0.745s"
+          },
+          {
+            "elapsed_seconds": 0.9518303261138499,
+            "directory": "live/0003-0.952s"
+          },
+          {
+            "elapsed_seconds": 1.1588149419985712,
+            "directory": "live/0004-1.159s"
+          },
+          {
+            "elapsed_seconds": 1.3661944000050426,
+            "directory": "live/0005-1.366s"
+          },
+          {
+            "elapsed_seconds": 1.5736541138030589,
+            "directory": "live/0006-1.574s"
+          },
+          {
+            "elapsed_seconds": 1.781123582739383,
+            "directory": "live/0007-1.781s"
+          },
+          {
+            "elapsed_seconds": 1.9884355887770653,
+            "directory": "live/0008-1.988s"
+          },
+          {
+            "elapsed_seconds": 2.1959771420806646,
+            "directory": "live/0009-2.196s"
+          },
+          {
+            "elapsed_seconds": 2.4032804598100483,
+            "directory": "live/0010-2.403s"
+          },
+          {
+            "elapsed_seconds": 2.6104045370593667,
+            "directory": "live/0011-2.610s"
+          },
+          {
+            "elapsed_seconds": 2.817672654055059,
+            "directory": "live/0012-2.818s"
+          },
+          {
+            "elapsed_seconds": 3.0249973628669977,
+            "directory": "live/0013-3.025s"
+          },
+          {
+            "elapsed_seconds": 3.2322784578427672,
+            "directory": "live/0014-3.232s"
+          }
+        ],
+        "trace_mode": "automatic",
+        "trace_packets_per_input": 4000,
+        "client_rc": 0,
+        "server_rc": 0,
+        "wall_seconds": 3.399662008974701,
+        "pds_retransmit_warning_lines": {
+          "client": 0,
+          "server": 0
+        },
+        "results": "/tmp/uet-obs-wdnor3e2/results/1794218748171831369-loss-0-pulse-0-mtu-1500-delay-0.1-0.1-rto-5"
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 635,
+          "max": 700
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 700.0,
+          "p95": 931,
+          "max": 998
+        }
+      },
+      "selected": {
+        "return_ack": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ACK",
+          "trace": "\n00:01:02:141695: uet-input\n  UET TX: worker 1 ip4/native length 52 fib-table 0 id 107 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 146945798 ACK-offset-or-probe 0x0000\n00:01:02:142395: nsim-wheel\n  NSIM: tx at 62.320924 next_index 0\n",
+          "retx": 0,
+          "spdcid": 65,
+          "dpdcid": 65,
+          "psn": null,
+          "cack_psn": 146945798,
+          "nodes": [
+            [
+              "uet-input",
+              62141695
+            ],
+            [
+              "nsim-wheel",
+              62142395
+            ]
+          ]
+        },
+        "return_rod_req": {
+          "source": "198.18.0.2",
+          "destination": "198.18.0.1",
+          "kind": "ROD_REQ",
+          "trace": "\n00:01:02:141697: uet-input\n  UET TX: worker 1 ip4/native length 148 fib-table 0 id 108 segments 1 next 0 disposition routed\n  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ flags 0x08 RETX 0 SPDCID 66 DPDCID 66 PSN 146945798\n00:01:02:141699: ip4-lookup\n  fib 0 dpo-idx 2 flow hash: 0x00000000\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 64, length 148, checksum 0xad45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:01:02:141699: ip4-rewrite\n  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.1 memif1/0: mtu:1500 next:3 flags:[] 0200000000010200000000020800 flow hash: 0x00000000\n00:01:02:141699: memif1/0-output\n  memif1/0 flags 0x01080001\n  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01\n  EXP1: 198.18.0.2 -> 198.18.0.1\n    tos 0x00, ttl 63, length 148, checksum 0xae45 dscp CS0 ecn NON_ECN\n    fragment id 0x0000, flags DONT_FRAGMENT\n00:01:02:141699: nsim-output-feature\n  NSIM: tx time 62.320328 sw_if_index 1\n00:01:02:142695: nsim-wheel\n  NSIM: tx at 62.321224 next_index 0\n",
+          "retx": 0,
+          "spdcid": 66,
+          "dpdcid": 66,
+          "psn": 146945798,
+          "cack_psn": null,
+          "nodes": [
+            [
+              "uet-input",
+              62141697
+            ],
+            [
+              "ip4-lookup",
+              62141699
+            ],
+            [
+              "ip4-rewrite",
+              62141699
+            ],
+            [
+              "memif1/0-output",
+              62141699
+            ],
+            [
+              "nsim-output-feature",
+              62141699
+            ],
+            [
+              "nsim-wheel",
+              62142695
+            ]
+          ]
+        }
+      },
+      "policer_packets": {
+        "conform": 1675,
+        "exceed": 0,
+        "violate": 15242
+      },
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "name": "return-policed-3"
+    }
+  ]
+}

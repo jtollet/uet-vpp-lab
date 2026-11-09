@@ -1,0 +1,65 @@
+--- a/nsim/node.c
++++ b/nsim/node.c
+@@ -149,0 +150 @@
++  u32 *drops_before = ctx->drop;
+@@ -205 +206 @@
+-    nsim_trace_buffer (vm, node, b, ctx, 0);
++    nsim_trace_buffer (vm, node, b, ctx, ctx->drop != drops_before);
+--- a/nsim/nsim_input.c
++++ b/nsim/nsim_input.c
+@@ -55,7 +55,7 @@
+ } nsim_next_t;
+ 
+ always_inline uword
+-nsim_drain_wheel (vlib_main_t *vm, vlib_node_runtime_t *node, nsim_wheel_t *wp, f64 now)
++nsim_drain_wheel (vlib_main_t *vm, vlib_node_runtime_t *node, nsim_wheel_t *wp, f64 now, int is_trace)
+ {
+   nsim_wheel_entry_t *ep;
+ 
+@@ -85,6 +85,20 @@
+       from[0] = ep->buffer_index;
+       next[0] = ep->output_next_index;
+ 
++      if (PREDICT_FALSE (is_trace))
++        {
++          vlib_buffer_t *b = vlib_get_buffer (vm, from[0]);
++          if (PREDICT_FALSE (b->flags & VLIB_BUFFER_IS_TRACED))
++            {
++              nsim_tx_trace_t *t = vlib_add_trace (vm, node, b, sizeof (*t));
++              t->expired = now;
++              t->next_index = next[0];
++              /* Acquire the frame before marking it for tracing. */
++              vlib_get_next_frame_internal (vm, node, next[0], 0);
++              vlib_trace_next_frame (vm, node, next[0]);
++            }
++        }
++
+       wp->head++;
+       if (wp->head == wp->wheel_size)
+ 	wp->head = 0;
+@@ -109,14 +123,14 @@
+   f64 now = vlib_time_now (vm);
+   uword n_tx;
+ 
+-  n_tx = nsim_drain_wheel (vm, node, wp, now);
++  n_tx = nsim_drain_wheel (vm, node, wp, now, is_trace);
+ 
+   /* Also drain the side wheel of late-reordered packets, if present. */
+   if (PREDICT_FALSE (nsm->reorder_wheel_by_thread != 0))
+     {
+       nsim_wheel_t *rwp = nsm->reorder_wheel_by_thread[vm->thread_index];
+       if (rwp)
+-	n_tx += nsim_drain_wheel (vm, node, rwp, now);
++	n_tx += nsim_drain_wheel (vm, node, rwp, now, is_trace);
+     }
+ 
+   return n_tx;
+@@ -125,7 +139,7 @@
+ VLIB_NODE_FN (nsim_input_node) (vlib_main_t * vm, vlib_node_runtime_t * node,
+ 				vlib_frame_t * frame)
+ {
+-  if (PREDICT_FALSE (node->flags & VLIB_NODE_FLAG_TRACE))
++  if (PREDICT_FALSE (vm->trace_main.trace_enable))
+     return nsim_input_inline (vm, node, frame, 1 /* is_trace */ );
+   else
+     return nsim_input_inline (vm, node, frame, 0 /* is_trace */ );

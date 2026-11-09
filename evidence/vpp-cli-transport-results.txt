@@ -1,0 +1,145 @@
+VPP native CLI evidence: reordered requests and return-path QoS
+Validated on x86-64 Linux on 9 November 2026. Exact source revisions and instrumentation are in README.md.
+
+reorder
+
+a-show-nsim.txt
+configuration
+ delay: 100.0 us
+ buffer: 1 bdp (fixed-delay model)
+ loss model: none
+ reorder fraction: .25000 delay up to 1.0 ms
+ packet size: 1500
+ worker wheel size: 9
+ throughput: 1.0 gbps
+
+output feature arcs to:
+ memif1/0 1
+
+a-show-errors.txt
+   Count                  Node                              Reason               Severity 
+       411             nsim-wheel                    Packets transmitted           error  
+       311        nsim-output-feature                  Packets buffered            error  
+       100        nsim-output-feature                 Packets reordered            error  
+
+reordered_arrivals (abridged)
+00:00:06:109018: memif-input
+00:00:06:109019: ethernet-input
+00:00:06:109019: ip4-input
+00:00:06:109019: ip4-lookup
+00:00:06:109019: ip4-receive
+00:00:06:109019: uet4-ip-input
+  UET RX: worker 1 ip4/native length 1108 sw_if_index 1 id 4294967602 segments 1 next 0 disposition delivered
+  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ RETX 0 SPDCID 65 SYN 1 PSN 1954782285
+
+reordered_arrivals (abridged)
+00:00:06:109249: memif-input
+00:00:06:109249: ethernet-input
+00:00:06:109249: ip4-input
+00:00:06:109250: ip4-lookup
+00:00:06:109250: ip4-receive
+00:00:06:109250: uet4-ip-input
+  UET RX: worker 1 ip4/native length 1108 sw_if_index 1 id 4294967603 segments 1 next 0 disposition delivered
+  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ RETX 0 SPDCID 65 SYN 1 PSN 1954782282
+
+Application return codes: (0, 0)
+PDS retransmit warning lines: {'client': 0, 'server': 0}
+
+return-loaded-1
+
+b-show-nsim-verbose.txt
+configuration
+ delay: 100.0 us
+ buffer: 20.0 ms (queued/bufferbloat model)
+ loss model: none
+ reorder fraction: 0
+ packet size: 1500
+ worker wheel size: 67
+ throughput: 40.0 mbps
+ poll main thread: 0
+ memory: 4k bytes per thread 4k bytes total
+
+output feature arcs to:
+ memif1/0 1
+
+b-show-errors.txt
+   Count                  Node                              Reason               Severity 
+     22919             nsim-wheel                    Packets transmitted           error  
+     22919        nsim-output-feature                  Packets buffered            error  
+     12529        nsim-output-feature        Packets dropped due to lack of spac   error  
+
+b-show-policer.txt
+
+return_ack (abridged)
+00:00:16:029537: uet-input
+  UET TX: worker 1 ip4/native length 52 fib-table 0 id 555 segments 1 next 0 disposition routed
+  198.18.0.2 -> 198.18.0.1 PDS ACK RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1494962252
+00:00:16:049845: nsim-wheel
+
+return_rod_req (abridged)
+00:00:17:102605: uet-input
+  UET TX: worker 1 ip4/native length 148 fib-table 0 id 909 segments 1 next 0 disposition routed
+  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ RETX 1 SPDCID 66 DPDCID 66 PSN 1494962270
+00:00:17:122707: nsim-wheel
+
+Application return codes: (0, 0)
+PDS retransmit warning lines: {'client': 626, 'server': 1048}
+
+return-policed-1
+
+b-show-nsim-verbose.txt
+configuration
+ delay: 100.0 us
+ buffer: 20.0 ms (queued/bufferbloat model)
+ loss model: none
+ reorder fraction: 0
+ packet size: 1500
+ worker wheel size: 67
+ throughput: 40.0 mbps
+ poll main thread: 0
+ memory: 4k bytes per thread 4k bytes total
+
+output feature arcs to:
+ memif1/0 1
+
+b-show-errors.txt
+   Count                  Node                              Reason               Severity 
+      1675           policer-input                   Packets Transmitted           error  
+     15208           policer-input                     Packets Dropped             error  
+      1795             nsim-wheel                    Packets transmitted           error  
+      1795        nsim-output-feature                  Packets buffered            error  
+
+b-show-policer.txt
+Name "background" type 1r2c cir 6000 eir 0 cb 6000 eb 0
+rate type kbps, round type closest
+conform action transmit, exceed action drop, violate action drop
+ 
+Policer at index 0: single rate, not color-aware
+cir 2147483 tok/period, pir 1 tok/period, scale 16
+cur lim 393216000, cur bkt 4359230, ext lim 0, ext bkt 4195745792
+last update 94842719871
+conform 1675 packets, 2535950 bytes
+exceed 0 packets, 0 bytes
+violate 15208 packets, 23024912 bytes
+-----------
+
+return_ack (abridged)
+00:00:21:987098: uet-input
+  UET TX: worker 1 ip4/native length 52 fib-table 0 id 89 segments 1 next 0 disposition routed
+  198.18.0.2 -> 198.18.0.1 PDS ACK RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 856887110
+00:00:21:987865: nsim-wheel
+
+return_rod_req (abridged)
+00:00:21:980901: uet-input
+  UET TX: worker 1 ip4/native length 148 fib-table 0 id 76 segments 1 next 0 disposition routed
+  198.18.0.2 -> 198.18.0.1 PDS ROD_REQ RETX 0 SPDCID 66 DPDCID 66 PSN 856887103
+00:00:21:981901: nsim-wheel
+
+Application return codes: (0, 0)
+PDS retransmit warning lines: {'client': 0, 'server': 0}
+
+Native policy placement (pg0 IPv4 unicast):
+ip4-unicast:
+  policer-input
+
+All three x86 repeated comparisons and four-CPU results: transport-validation-x86-20261109.json and the full evidence archive.

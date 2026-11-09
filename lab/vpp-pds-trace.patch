@@ -1,0 +1,175 @@
+diff --git a/uet/node.c b/uet/node.c
+index 255f408..0fac217 100644
+--- a/uet/node.c
++++ b/uet/node.c
+@@ -67,0 +68,2 @@ typedef struct
++  u8 header_length;
++  u8 header[96];
+@@ -126,0 +129,12 @@ uet_trace_add (vlib_main_t *vm, vlib_node_runtime_t *node, vlib_buffer_t *buffer
++  trace->header_length = 0;
++
++  /* Snapshot only traced headers: the application may release/reuse the
++   * original buffer before the CLI formats this trace. */
++  i32 offset = direction ? vnet_buffer (buffer)->l3_hdr_offset : buffer->current_data;
++  i32 end = buffer->current_data + buffer->current_length;
++  if (offset >= -VLIB_BUFFER_PRE_DATA_SIZE && offset < end)
++    {
++      trace->header_length =
++	clib_min ((u32) sizeof (trace->header), clib_min (packet_length, (u32) (end - offset)));
++      clib_memcpy_fast (trace->header, buffer->data + offset, trace->header_length);
++    }
+@@ -1397,0 +1412,148 @@ static char *uet_local_error_strings[] = {
++static u16
++uet_trace_u16 (const u8 *p)
++{
++  u16 value;
++
++  clib_memcpy_fast (&value, p, sizeof (value));
++  return clib_net_to_host_u16 (value);
++}
++
++static u32
++uet_trace_u32 (const u8 *p)
++{
++  u32 value;
++
++  clib_memcpy_fast (&value, p, sizeof (value));
++  return clib_net_to_host_u32 (value);
++}
++
++/* Decode the common PDS headers without taking a dependency on libuet.
++ * Truncated/unsupported headers remain visible as such, rather than being
++ * interpreted as a different PDS layout. IPv6 extensions are not decoded. */
++static u8 *
++uet_trace_format_packet (u8 *s, const uet_trace_t *trace)
++{
++  const u8 *p = trace->header;
++  u32 available = trace->header_length, ip_length, offset;
++  u8 protocol, type, flags;
++  u16 prologue;
++  const char *name;
++
++  if (trace->ip_version == 4)
++    {
++      ip4_header_t ip;
++
++      if (available < sizeof (ip))
++	return format (s, "\n  PDS unavailable: truncated IPv4 header");
++      clib_memcpy_fast (&ip, p, sizeof (ip));
++      offset = ip4_header_bytes (&ip);
++      ip_length = clib_net_to_host_u16 (ip.length);
++      if (ip.ip_version_and_header_length >> 4 != 4 || offset < sizeof (ip) || offset > available ||
++	  ip_length < offset)
++	return format (s, "\n  PDS unavailable: invalid IPv4 header");
++      s = format (s, "\n  %U -> %U", format_ip4_address, &ip.src_address, format_ip4_address,
++		  &ip.dst_address);
++      if (clib_net_to_host_u16 (ip.flags_and_fragment_offset) & 0x3fff)
++	return format (s, " PDS unavailable: fragmented IPv4 packet");
++      protocol = ip.protocol;
++    }
++  else if (trace->ip_version == 6)
++    {
++      ip6_header_t ip;
++
++      if (available < sizeof (ip))
++	return format (s, "\n  PDS unavailable: truncated IPv6 header");
++      clib_memcpy_fast (&ip, p, sizeof (ip));
++      if (clib_net_to_host_u32 (ip.ip_version_traffic_class_and_flow_label) >> 28 != 6)
++	return format (s, "\n  PDS unavailable: invalid IPv6 header");
++      offset = sizeof (ip);
++      ip_length = offset + clib_net_to_host_u16 (ip.payload_length);
++      protocol = ip.protocol;
++      s = format (s, "\n  %U -> %U", format_ip6_address, &ip.src_address, format_ip6_address,
++		  &ip.dst_address);
++    }
++  else
++    return format (s, "\n  PDS unavailable: unsupported IP version");
++
++  available = clib_min (available, ip_length);
++  if (protocol == IP_PROTOCOL_UDP)
++    {
++      u16 length;
++
++      if (available < offset + sizeof (udp_header_t))
++	return format (s, " PDS unavailable: truncated UDP header");
++      length = uet_trace_u16 (p + offset + 4);
++      if (uet_trace_u16 (p + offset + 2) != UET_UDP_PORT || length < sizeof (udp_header_t) ||
++	  length > ip_length - offset)
++	return format (s, " PDS unavailable: invalid UET UDP header");
++      available = clib_min (available, offset + length);
++      offset += sizeof (udp_header_t);
++    }
++  else if (protocol == UET_IP_PROTOCOL)
++    offset += 4; /* Native-IP entropy header. */
++  else
++    return format (s, " PDS unavailable: unsupported IP protocol %u", protocol);
++
++  if (available < offset + sizeof (prologue))
++    return format (s, " PDS unavailable: truncated prologue");
++  p += offset;
++  available -= offset;
++  prologue = uet_trace_u16 (p);
++  type = (prologue & UET_WIRE_PDS_TYPE_MASK) >> UET_WIRE_PDS_TYPE_SHIFT;
++  flags = prologue & UET_WIRE_PDS_FLAGS_MASK;
++  switch (type)
++    {
++    case UET_WIRE_PDS_RUD_REQ:
++      name = "RUD_REQ";
++      break;
++    case UET_WIRE_PDS_ROD_REQ:
++      name = "ROD_REQ";
++      break;
++    case UET_WIRE_PDS_RUD_CC_REQ:
++      name = "RUD_CC_REQ";
++      break;
++    case UET_WIRE_PDS_ROD_CC_REQ:
++      name = "ROD_CC_REQ";
++      break;
++    case UET_WIRE_PDS_ACK:
++      name = "ACK";
++      break;
++    case UET_WIRE_PDS_ACK_CC:
++      name = "ACK_CC";
++      break;
++    case UET_WIRE_PDS_ACK_CCX:
++      name = "ACK_CCX";
++      break;
++    case UET_WIRE_PDS_NACK:
++      name = "NACK";
++      break;
++    case UET_WIRE_PDS_CTRL:
++      name = "CTRL";
++      break;
++    default:
++      return format (s, " PDS type %u flags 0x%02x (layout not decoded)", type, flags);
++    }
++
++  s = format (s, " PDS %s flags 0x%02x RETX %u", name, flags, !!(flags & 0x10));
++  if (type == UET_WIRE_PDS_NACK && (flags & UET_WIRE_PDS_NACK_RUDI))
++    return format (s, " (RUDI NACK layout not decoded)");
++  if (available < UET_WIRE_PDC_HEADER_SIZE)
++    return format (s, " (truncated common header)");
++  s = format (s, " SPDCID %u", uet_trace_u16 (p + 8));
++  if ((type == UET_WIRE_PDS_CTRL || type == UET_WIRE_PDS_RUD_REQ || type == UET_WIRE_PDS_ROD_REQ ||
++       type == UET_WIRE_PDS_RUD_CC_REQ || type == UET_WIRE_PDS_ROD_CC_REQ) &&
++      (flags & UET_WIRE_PDS_REQ_SYN))
++    s = format (s, " PDC-info 0x%04x SYN 1", uet_trace_u16 (p + 10));
++  else
++    s = format (s, " DPDCID %u", uet_trace_u16 (p + 10));
++  if (type == UET_WIRE_PDS_ACK || type == UET_WIRE_PDS_ACK_CC || type == UET_WIRE_PDS_ACK_CCX)
++    return format (s, " CACK_PSN %u ACK-offset-or-probe 0x%04x", uet_trace_u32 (p + 4),
++		   uet_trace_u16 (p + 2));
++  s = format (s, " PSN %u", uet_trace_u32 (p + 4));
++  if (type == UET_WIRE_PDS_NACK)
++    s = format (s, " NACK-code %u", p[2]);
++  if (type == UET_WIRE_PDS_CTRL)
++    s = format (s, " CTRL-type %u", (prologue & UET_WIRE_PDS_NEXT_MASK) >> UET_WIRE_PDS_NEXT_SHIFT);
++  return s;
++}
++
+@@ -1435,2 +1597,3 @@ format_uet_trace (u8 *s, va_list *args)
+-  return format (s, "id %llu segments %u next %u disposition %s", trace->id, trace->segment_count,
+-		 trace->next_index, disposition);
++  s = format (s, "id %llu segments %u next %u disposition %s", trace->id, trace->segment_count,
++	      trace->next_index, disposition);
++  return uet_trace_format_packet (s, trace);

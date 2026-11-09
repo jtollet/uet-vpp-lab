@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using VPP to Explore and Troubleshoot Ultra Ethernet</title>
+<style>
+:root { color-scheme: light; font-family: system-ui, -apple-system, sans-serif; color: #182b3b; background: #f1f4f7; }
+body { margin: 0; line-height: 1.65; } main { max-width: 900px; margin: 30px auto; padding: 38px 46px; background: white; border-radius: 12px; }
+h1 { font-size: 2.3rem; line-height: 1.2; letter-spacing: -.025em; } h2 { margin-top: 2.2rem; font-size: 1.5rem; line-height: 1.3; }
+a { color: #005ea8; text-underline-offset: 3px; } p { margin: 1rem 0; }
+.meta, figcaption { color: #526475; font-size: .9rem; }
+header { border-bottom: 1px solid #d9e2e9; padding-bottom: 1rem; margin-bottom: 2rem; }
+.standfirst { font-size: 1.2rem; line-height: 1.6; color: #40566a; }
+code { font: .88em ui-monospace, Menlo, Consolas, monospace; overflow-wrap: anywhere; }
+p code, td code { background: #edf2f6; padding: .08em .25em; border-radius: 3px; }
+pre { background: #122536; color: #e5edf4; border-radius: 7px; padding: 18px; overflow-x: auto; line-height: 1.55; }
+pre code { white-space: pre; overflow-wrap: normal; } figure { margin: 24px 0; } svg { display: block; width: 100%; height: auto; }
+figcaption { text-align: center; } .table-scroll { overflow-x: auto; } table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+th, td { border: 1px solid #d9e2e9; padding: 10px; text-align: left; } th { background: #edf3f7; }
+@media (max-width: 650px) { main { margin: 0; padding: 24px 18px; border-radius: 0; } h1 { font-size: 1.9rem; } }
+@media print { :root { background: white; } main { margin: 0; padding: 0; max-width: none; } header { break-inside: avoid; } pre { white-space: pre-wrap; background: #f1f4f7; color: black; } pre code { white-space: pre-wrap; } h2 { break-after: avoid; } }
+</style></head><body><main>
+<header>
+<p class="meta">Hands-on networking lab · VPP 26.10</p>
+<h1>Using VPP to Explore and Troubleshoot Ultra Ethernet</h1>
+<p class="standfirst">Build a small Ultra Ethernet Transport (UET) lab, watch its packets inside VPP, and deliberately introduce network problems. Use VPP&#x27;s counters and traces to explain each failure and check that the fix works.</p>
+</header>
+<article><p>An application reports that a transfer is slow or has failed. Finding the cause starts with seeing what happened to its packets. In this article, we use VPP as an observable, configurable network around two UET test applications.</p>
+<p>VPP is a software packet processor. It can forward traffic, show the steps a packet took, and simulate network conditions such as loss and delay. A <strong>counter</strong> tells us how often an event occurred; a <strong>trace</strong> records what happened to an individual packet.</p>
+<p>We will begin with a working exchange, then change one network condition at a time. By the end, you will have used VPP to watch UET recover from packet loss, explain a transfer blocked by an undersized network path, and identify retries caused by delayed responses. We will also distinguish reordered packets from lost ones and use a VPP QoS policy to protect UET exchanges from competing traffic.</p>
+<h2>Build a small network you can inspect</h2>
+<figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 145" role="img" aria-labelledby="topology-title topology-description">
+<title id="topology-title">UET observability lab topology</title>
+<desc id="topology-description">A UET client communicates through shared memory with VPP A. A memif link connects VPP A and VPP B. VPP B communicates through shared memory with the UET server. UET terminates in the applications.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5a6a7b"/></marker></defs>
+<g fill="#eff5fa" stroke="#58758c" stroke-width="1.5">
+<rect x="10" y="48" width="160" height="64" rx="9"/><rect x="250" y="48" width="160" height="64" rx="9"/>
+<rect x="490" y="48" width="160" height="64" rx="9"/><rect x="730" y="48" width="160" height="64" rx="9"/>
+</g><g stroke="#5a6a7b" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)">
+<path d="M 180 80 H 240"/><path d="M 420 80 H 480"/><path d="M 660 80 H 720"/>
+</g><g fill="#20394c" font-family="system-ui, sans-serif" font-size="19" text-anchor="middle">
+<text x="90" y="87">UET client</text><text x="330" y="87">VPP A</text><text x="570" y="87">VPP B</text><text x="810" y="87">UET server</text>
+</g><g fill="#526475" font-family="system-ui, sans-serif" font-size="16" text-anchor="middle">
+<text x="210" y="35" font-size="14">shared memory</text><text x="450" y="35" font-size="14">virtual link</text><text x="690" y="35" font-size="14">shared memory</text>
+</g></svg><figcaption>The applications handle UET. VPP lets us observe and control their network path.</figcaption></figure>
+<p>Everything runs on one Linux machine. Each application exchanges UET packets with a VPP instance through shared memory. VPP A and VPP B communicate over a virtual link, implemented by VPP&#x27;s <code>memif</code> interface. This gives us a network whose behaviour we can change and inspect.</p>
+<p>The UET protocol runs in the applications. VPP handles their network packets and provides the monitoring, tracing and fault injection used in the experiments.</p>
+<p>The commands below use Ubuntu on an x86-64 machine with at least four available logical CPUs and sudo access. The downloadable scripts build the test applications and VPP 26.10, including the UET trace decoding shown below. The lab README contains the full setup details.</p>
+<p><a href="https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-observability-lab.zip">Download and unpack the lab files</a>. From their directory, build and start the network:</p>
+<pre><code>sudo apt-get update
+sudo apt-get install -y git build-essential python3
+export UET_LAB_ROOT=&quot;$HOME/uet-observability&quot;
+UET_LAB_INSTALL_DEPS=1 bash build.sh &quot;$UET_LAB_ROOT&quot;
+sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; up</code></pre>
+<p>Keep that terminal for running the tests. In another terminal, open VPP A&#x27;s CLI—its interactive command line. Use <code>console b</code> in a third terminal to inspect VPP B:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; console a</code></pre>
+<p>The prompt becomes <code>vpp#</code>. These commands ask VPP about the running plugins, its processing threads, the virtual link and the IP configuration:</p>
+<pre><code>set terminal pager off
+show plugins
+show threads
+show memif
+show interface address
+show ip fib
+show ip neighbors</code></pre>
+<p>The first useful checkpoint is <code>admin-up connected</code> in <code>show memif</code>: the two VPPs have established their virtual link. <code>show interface address</code> should show <code>198.18.0.1</code> on A and <code>198.18.0.2</code> on B. The route and neighbor commands show how each VPP reaches the other endpoint. We check this before interpreting any UET failure.</p>
+<h2>Start with a working UET exchange</h2>
+<p>Run a short test from the original terminal:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --iterations 20</code></pre>
+<p>The client sends a 4 KiB message and waits for a reply. The application repeats this 20 times with one buffer per message, then 20 times with several buffers per message: 40 exchanges in total. Both applications check the data and finish successfully.</p>
+<p>While the test runs, use <code>show uet</code> in VPP A&#x27;s console. Here are selected fields from a sample taken while the client was still connected:</p>
+<pre><code>state enabled
+workers 1
+owner-worker vpp_wk_0 (1)
+tx-requests 203
+invalid-requests 0
+tx-completion-ring-full 0
+tx-packets 203
+tx-completions 203
+rx-delivered 203
+rx-ring-full 0
+rx-releases 203
+rx-invalid-releases 0
+rx-outstanding 0
+provider-ready yes</code></pre>
+<p>Read TX as packets submitted by the application to VPP, and RX as packets received from the network and handed to the application. In this sample, 203 packets have travelled in each direction.</p>
+<p>The application and VPP exchange packets through shared queues, called rings. <code>invalid-requests 0</code> and the zero ring-full counters show that the plugin has accepted the submissions without a queue-capacity error. <code>rx-releases 203</code> and <code>rx-outstanding 0</code> show that the application has returned all 203 received buffers at this point.</p>
+<p><code>tx-completions</code> records acceptance at the application/VPP boundary. To confirm delivery to the other endpoint, we also need the received responses and the application&#x27;s result. This distinction will explain the MTU failure below.</p>
+<p><code>provider-ready yes</code> means the application is connected. Once it exits, <code>provider-ready no</code> is expected. The scripts also save <code>show uet</code> every 500 ms, so you can review the changing counters after a test.</p>
+<h2>Experiment 1: drop packets and watch UET recover</h2>
+<p>First, create a fault whose cause we know. VPP&#x27;s <code>nsim</code> plugin simulates network conditions; here we ask it to discard about one percent of the packets leaving VPP A:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --loss 0.01</code></pre>
+<p>This longer test runs 1,000 exchanges in each of the application&#x27;s two buffer modes. In our recorded run, VPP dropped 99 packets and both applications still completed. To understand how they recovered, inspect VPP A:</p>
+<pre><code>show interface features memif1/0
+show nsim
+show errors
+show trace paths
+show trace path 3 max 1</code></pre>
+<p>A VPP node is one processing step. <code>show trace paths</code> groups packets by the steps recorded in their traces. Pick the path that ends at the simulated loss, then use its index with <code>show trace path</code>; our index was 3, and yours may differ.</p>
+<p>Two UET fields make the packet easy to follow: <code>PSN</code> is its packet sequence number, and <code>RETX 1</code> marks a retransmission. The same PSN appears in these abridged records:</p>
+<pre><code>VPP A, original request:
+  PDS ROD_REQ RETX 0 SPDCID 65 DPDCID 65 PSN 505542063
+nsim-output-feature
+  NSIM: dropped, simulated network loss
+
+VPP A, retransmission:
+  PDS ROD_REQ RETX 1 SPDCID 65 DPDCID 65 PSN 505542063
+
+VPP B, receive:
+  UET RX: ... disposition delivered
+  PDS ROD_REQ RETX 1 SPDCID 65 DPDCID 65 PSN 505542063</code></pre>
+<p>We can now follow the recovery: VPP A drops the original packet, UET sends the packet again with <code>RETX 1</code>, and VPP B reports <code>disposition delivered</code>. Matching the source IP and PSN, together with the delivery-context identifiers <code>SPDCID</code> and <code>DPDCID</code>, links the records across the two VPPs. The numerical PSN will vary between runs.</p>
+<p>This is the debugging value of the trace: it connects a known network fault to the transport&#x27;s reaction and the eventual delivery.</p>
+<p>Use <code>show trace max 4000</code> to display more of the saved packets; plain <code>show trace</code> displays only 50 per thread. In <code>show errors</code>, read the Reason column and look for <code>Network loss simulation drop packet</code>. The same output includes normal activity counters such as “Packets buffered”. The explicit <code>nsim</code> drop record identifies this injected fault; these packets are freed directly by the simulator.</p>
+<h2>Experiment 2: explain why a larger transfer fails</h2>
+<p>Now change the maximum size of an IPv4 packet that VPP can send on the link. This limit is the <strong>MTU</strong>, or Maximum Transmission Unit. Set it to 576 bytes and try a small message:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --mtu 576 --size 64 --iterations 20</code></pre>
+<p>The 64-byte messages pass. Try the original 4 KiB message over the same path:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --mtu 576 --size 4096 --iterations 1 --deadline-s 8</code></pre>
+<p>The script applies VPP&#x27;s <code>set interface mtu ip4 576 memif1/0</code> command on both sides, while the application still uses a configured MTU of 1500. This deliberately creates a mismatch. The command is expected to fail: the client reaches UET&#x27;s retry limit and reports an I/O error. The script then stops the waiting server.</p>
+<p>An application error tells us the exchange failed. <code>show uet</code> gives us a first clue about where to investigate:</p>
+<pre><code>tx-requests 404
+invalid-requests 0
+tx-completion-ring-full 0
+tx-packets 404
+tx-completions 404
+rx-delivered 0
+rx-ring-full 0
+rx-outstanding 0</code></pre>
+<p>All 404 submissions, including retries, were accepted by the plugin. The queue-full counters are zero, and no UET response has arrived. To find what happened after submission, inspect the interface and packet path:</p>
+<pre><code>show interface memif1/0
+show errors
+show trace paths
+show trace path 1 max 1</code></pre>
+<p>Choose the drop-path index listed by your own <code>show trace paths</code>. <code>show errors</code> gives us a specific reason:</p>
+<pre><code>   Count                  Node                              Reason               Severity
+       404             ip4-input                 ip4 MTU exceeded and DF set       error
+       404           ip4-icmp-error                 error message dropped          error  </code></pre>
+<p>The trace shows the packet&#x27;s size and the limit it encounters:</p>
+<pre><code>uet-input
+  UET TX: ... ip4/native length 1108 ... disposition routed
+ip4-lookup
+  flags DONT_FRAGMENT
+ip4-rewrite
+  ... ipv4 via 198.18.0.2 memif1/0: mtu:576 ...
+ip4-icmp-error
+...
+drop
+  ip4-input: ip4 MTU exceeded and DF set</code></pre>
+<p>UET has already divided the 4 KiB message into smaller packets. The packet in this trace is 1,108 bytes, which still exceeds the link&#x27;s 576-byte MTU. <code>DONT_FRAGMENT</code> tells VPP that this IPv4 packet must not be split into further fragments.</p>
+<p>The trace locates the rejection at the IPv4 forwarding step. UET keeps retrying a packet that is too large for this path. VPP has given us both the cause and the configuration to change.</p>
+<p>Restore the MTU to 1500 and repeat the transfer. After this deliberately failed test, restart the lab to begin with fresh applications and VPP instances:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; down
+sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; up
+sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --mtu 1500 --iterations 20</code></pre>
+<p>The corrected VPP setting is <code>set interface mtu ip4 1500 memif1/0</code>. The same 4 KiB transfer now completes, the MTU errors stay at zero, and the retry warnings disappear. Reopen the CLI consoles after restarting VPP to inspect the new run.</p>
+<p>We have used a VPP configuration change to reproduce the failure, its trace to explain the rejection, and a second run to verify the fix. The UET library code is unchanged.</p>
+<h2>Experiment 3: add delay and investigate retries without loss</h2>
+<p>A retry can also happen when a packet arrives successfully but its response takes longer than the sender is prepared to wait. UET uses acknowledgements, or <strong>ACKs</strong>, to track delivery. Its retry timer determines when it sends a packet again.</p>
+<p>The 20 ms delay is deliberately large: we want it to exceed the reference software&#x27;s <a href="https://github.com/ultraethernet/uet-ref-prov/blob/main/README.md">default 5 ms retry timer</a> so the effect is easy to observe. That timer is configured in milliseconds. For scale, the <a href="https://ultraethernet.org/wp-content/uploads/sites/20/2026/01/UE-Specification-1.0.2-1.pdf">UEC congestion-control specification</a> uses an illustrative 12 us base RTT. Our experiment creates a strongly degraded path to demonstrate the mechanism. The 100 ms value used later is an alternative UET retry timeout.</p>
+<p>Use VPP to add 20 ms of delay in each direction, with no configured loss, while retaining that 5 ms retry timeout:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --delay-ms 20 --reverse-delay-ms 20 --tx-timeout-ms 5 --iterations 20</code></pre>
+<p>This asks VPP&#x27;s simulator to apply the following setting on each side:</p>
+<pre><code>set nsim delay 20 ms bandwidth 1 gbit packet-size 1500 drop-fraction 0</code></pre>
+<p><code>show nsim</code> confirms the delay, and <code>show errors</code> reports no simulated-loss or buffer-exhaustion drops. Yet the application reports retries. These records from VPP A show the original send, a retry, and the returning ACK on the same clock:</p>
+<pre><code>00:00:06:287479: uet-input
+  198.18.0.1 -&gt; 198.18.0.2 PDS ROD_REQ RETX 0 SPDCID 65 SYN 1 PSN 221390863
+
+00:00:06:292351: uet-input
+  198.18.0.1 -&gt; 198.18.0.2 PDS ROD_REQ RETX 1 SPDCID 65 SYN 1 PSN 221390863
+
+00:00:06:327616: uet4-ip-input
+  198.18.0.2 -&gt; 198.18.0.1 PDS ACK RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 221390863</code></pre>
+<p>The original&#x27;s ACK returns about 40 ms after the initial send, matching the delay we introduced in the two directions. The retry occurred much earlier. Its PSN is unchanged, and the ACK&#x27;s <code>CACK_PSN</code> acknowledges that same sequence number. The <code>SYN</code> field marks the initial setup of packet delivery.</p>
+<p>We can now explain the symptom: the retry timer expires before the network has time to return the ACK. On ACK packets, the RETX field describes the request being acknowledged.</p>
+<p>Keep <code>show uet</code> open while experimenting. In this run, a sample taken during the transfer showed:</p>
+<pre><code>tx-requests 872
+invalid-requests 0
+tx-completions 872
+rx-delivered 836
+rx-ring-full 0
+rx-releases 836
+rx-outstanding 0
+provider-ready yes
+application-0-pds-mode pds</code></pre>
+<p>The counters continue advancing in later samples. The application is receiving packets and returning their buffers, with no queue-full events:</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Elapsed sample time</th><th scope="col">TX packets</th><th scope="col">RX delivered</th><th scope="col">RX released</th></tr></thead><tbody><tr><td>1.733s</td><td>872</td><td>836</td><td>836</td></tr><tr><td>2.241s</td><td>1740</td><td>1704</td><td>1704</td></tr><tr><td>2.749s</td><td>2613</td><td>2577</td><td>2577</td></tr></tbody></table></div>
+<p>Test the diagnosis by removing the delay in VPP and repeating the same work with the original UET timeout:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --delay-ms 0.1 --reverse-delay-ms 0 --tx-timeout-ms 5 --iterations 20</code></pre>
+<p>The script restores a 100 us delay from A to B and removes the delay feature on the return path. Verify that change with <code>show interface features memif1/0</code>: it shows which features are actually applied to the packets.</p>
+<p>As another check, we kept the long network delay and increased UET&#x27;s existing timeout setting to 100 ms with <code>--tx-timeout-ms 100</code>. Both controls eliminate the retries:</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Network setting</th><th scope="col">UET retry timeout</th><th scope="col">VPP A TX packets</th><th scope="col">UET retry warnings (client)</th><th scope="col">Result</th></tr></thead><tbody><tr><td>20 ms each way</td><td>5 ms</td><td>2763</td><td>2560</td><td>Completed</td></tr><tr><td>20 ms each way</td><td>100 ms</td><td>203</td><td>0</td><td>Completed</td></tr><tr><td>Delay removed: 100 us forward, none reverse</td><td>5 ms</td><td>203</td><td>0</td><td>Completed</td></tr></tbody></table></div>
+<p>Each row performs the same 40 message exchanges with 4 KiB messages. The warning counts come from the UET application&#x27;s log; a packet may be retried more than once. These timeout values are experimental settings.</p>
+<p>The useful result is the connection between network behaviour and UET&#x27;s response. VPP let us create the delay, observe the late ACK, and confirm that removing the delay removed the retries.</p>
+<h2>Experiment 4: distinguish a late packet from a lost packet</h2>
+<p>Packets can arrive in a different order even when the network drops none of them. Before interpreting a retry or an ordering-related response, we need to establish what actually reached the receiver.</p>
+<p>Keep the 4 KiB messages and run a clean control, then ask VPP A to delay a quarter of its packets by up to one additional millisecond:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --iterations 30
+sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --iterations 30 \
+    --reorder-fraction 0.25 --reorder-delay-ms 1 --trace-packets 4000</code></pre>
+<p>The launcher keeps the base delay at 100 us, the random-loss probability at zero and UET&#x27;s retry timeout at 5 ms. Check the configured cause in VPP A:</p>
+<pre><code>show nsim
+show errors
+show trace paths</code></pre>
+<p>Our run counted 100 packets sent through the late-reorder wheel and no nsim drops. Now inspect <code>show trace max 8000</code> on VPP B. These two abridged records show original requests arriving in the opposite order to their packet sequence numbers:</p>
+<pre><code>00:00:06:109019: uet4-ip-input
+  UET RX: ... disposition delivered
+  PDS ROD_REQ RETX 0 SPDCID 65 SYN 1 PSN 1954782285
+
+00:00:06:109250: uet4-ip-input
+  UET RX: ... disposition delivered
+  PDS ROD_REQ RETX 0 SPDCID 65 SYN 1 PSN 1954782282</code></pre>
+<p>The lower PSN arrives 231 us after the higher one. Both have <code>RETX 0</code>, so this pair demonstrates reordered original requests. VPP&#x27;s receive disposition means delivery to the application-facing shim; the UET transport still decides how to handle their order.</p>
+<p>The collector found 43 such backward steps in the sampled arrival sequence, compared with zero in the clean control. Both applications completed 30 exchanges in each buffer mode and logged zero PDS retransmission warnings. The client also logged <code>No Match</code> and <code>Bad Generation</code> semantic responses; those are retained in the application logs and are separate from the PDS retry count.</p>
+<p>This experiment uses the application&#x27;s existing ROD mode. It demonstrates observed packet arrival and the reference stack&#x27;s outcome under reordering. A RUD comparison would need an application explicitly configured for that delivery mode.</p>
+<h2>Experiment 5: congest the return path and test a QoS policy</h2>
+<p>A request may reach its destination while its acknowledgement waits behind other traffic on the way back. VPP lets us inspect that return path and test whether controlling competing traffic changes the result.</p>
+<p>For this experiment, use 64-byte application messages. Configure VPP B&#x27;s nsim output as a queue with a nominal rate of 40 Mbit/s, a 20 ms buffer and 100 us propagation delay. First run it without competing traffic:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --size 64 --iterations 30 \
+    --reverse-delay-ms 0.1 --reverse-bandwidth-mbps 40 --reverse-buffer-ms 20</code></pre>
+<p>Next add 5,000 ordinary UDP packets per second, generated by VPP B through its <code>pg0</code> interface:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --size 64 --iterations 30 \
+    --reverse-delay-ms 0.1 --reverse-bandwidth-mbps 40 --reverse-buffer-ms 20 \
+    --background-pps 5000</code></pre>
+<p>The UDP packets and UET&#x27;s return packets share B&#x27;s memif output and nsim queue. No UDP generator runs inside the UET application. Inspect VPP B:</p>
+<pre><code>show packet-generator verbose
+show interface features memif1/0
+show nsim verbose
+show errors
+show uet
+show trace max 8000</code></pre>
+<p><code>show nsim verbose</code> identifies the queued model, its rate and its buffer. <code>show errors</code> reports packets dropped when that queue fills. The background packets are discarded at VPP A; they never enter the UET transport. The complete snapshots retain those separate receive-side discard counters too.</p>
+<p>For an ACK that did get through, B&#x27;s native trace shows where it waited:</p>
+<pre><code>00:00:16:029537: uet-input
+  PDS ACK RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 1494962252
+00:00:16:049845: nsim-wheel</code></pre>
+<p>The interval between these two graph timestamps is 20.308 ms, already longer than the 5 ms retry timeout. Both timestamps belong to VPP B, so this calculation needs no clock synchronization between the two VPPs. The trace localizes waiting on the return path; the queue-full counter separately establishes actual loss under overload.</p>
+<p>Now apply a QoS policy that limits only the background ingress to 6 Mbit/s:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; run --size 64 --iterations 30 \
+    --reverse-delay-ms 0.1 --reverse-bandwidth-mbps 40 --reverse-buffer-ms 20 \
+    --background-pps 5000 --background-policer-mbps 6</code></pre>
+<p>In this third run, the launcher applies these native VPP commands:</p>
+<pre><code>policer add name background type 1r2c rate kbps cir 6000 cb 6000 conform-action transmit exceed-action drop violate-action drop
+policer input name background pg0</code></pre>
+<p>The <strong>policer</strong> admits traffic within its rate and burst allowance and drops excess background packets before they reach the shared output queue. UET uses its separate shared-memory ingress, so its ACKs and replies bypass this policer. This is ingress load control; there is no strict-priority output scheduler in this example.</p>
+<p>While the test runs, inspect <code>show interface features pg0</code> and <code>show policer name background</code>. The saved snapshots include the policy before the launcher removes it. An abridged sample shows that background traffic is still admitted:</p>
+<pre><code>Name &quot;background&quot; type 1r2c cir 6000 eir 0 cb 6000 eb 0
+rate type kbps, round type closest
+conform action transmit, exceed action drop, violate action drop
+conform 1675 packets, 2535950 bytes
+violate 15208 packets, 23024912 bytes</code></pre>
+<p>We repeated each setting three times on x86-64 Linux. Each run performs the same 30 exchanges in both buffer modes:</p>
+<div class="table-scroll"><table><thead><tr><th scope="col">Return-path setting</th><th scope="col">Median traced ACK wait inside VPP B</th><th scope="col">Client PDS retry warnings</th><th scope="col">Application result</th></tr></thead><tbody><tr><td>Queue, no background traffic</td><td>About 0.40 ms</td><td>0</td><td>Completed in all three runs</td></tr><tr><td>Queue plus 5,000 background packets/s</td><td>20.03–20.10 ms</td><td>626–1,337</td><td>Completed in all three runs</td></tr><tr><td>Same traffic, background limited to 6 Mbit/s</td><td>About 0.40 ms</td><td>0</td><td>Completed in all three runs</td></tr></tbody></table></div>
+<p>The policer moves the deliberate background drops to ingress, removes the output queue overflows and restores prompt UET feedback. These are observations from counters and sampled traces, rather than an assumption that a successful application must have experienced a healthy network. An additional comparison with the applications restricted to the same four CPUs as VPP showed the same effect.</p>
+<p>The nsim queue uses a nominal 1,500-byte service cost for every packet, including small ACKs. Its low rate makes the effect visible on a normal computer; the table measures this software experiment, not production-fabric latency. Both ACKs and echoed data share the return path, so the result covers the whole return traffic stream.</p>
+<p>Persistent overload can exhaust the retry budget on a smaller machine, as it did in our ARM64 VM. If an application fails, recreate the lab before the next manual run. The automated comparison records that outcome and restarts the lab before testing the QoS repair:</p>
+<pre><code>sudo python3 transport_scenarios.py --root &quot;$UET_LAB_ROOT&quot; --scenario qos --repeats 3</code></pre>
+<p>The useful debugging sequence is visible throughout: find the waiting or dropping node, correlate the UET packets, apply a specific network policy, and check the same observations again.</p>
+<h2>Use the observations to choose your next experiment</h2>
+<div class="table-scroll"><table><thead><tr><th scope="col">UET symptom</th><th scope="col">VPP evidence</th><th scope="col">Diagnosis to test</th></tr></thead><tbody><tr><td>Retransmissions followed by recovery</td><td><code>nsim</code> loss counter, explicit drop trace, same PSN delivered with RETX</td><td>Actual network loss</td></tr><tr><td>Small messages work; larger transfer fails</td><td>Packet length exceeds egress MTU, DF set, MTU drop counter</td><td>Inconsistent MTU configuration</td></tr><tr><td>Many retries, no drops, healthy rings</td><td>Delayed request/ACK trace; retry count falls when delay is removed</td><td>Retry timer shorter than feedback delay</td></tr><tr><td>Original requests arrive out of order</td><td>Receive timestamps and PSNs; reordered counter, no nsim drops</td><td>Packet reordering</td></tr><tr><td>Retries grow under competing traffic</td><td>ACK waiting inside VPP, queue-full drops; both fall with background policing</td><td>Return-path congestion</td></tr></tbody></table></div>
+<p>Start with <code>show uet</code> to see whether the application is submitting and receiving packets. Use <code>show errors</code> and traces to find where packets are discarded or delayed. Then change the suspected network condition and rerun the exchange.</p>
+<p>For a wider view, <code>show runtime</code> and <code>show threads</code> show where VPP is doing the work, and <code>show buffers</code> shows buffer-pool usage. These observations help you decide whether to investigate the packet path, processing resources or the application&#x27;s interaction with VPP.</p>
+<p>The counters cover the full run, while the saved traces contain a limited selection of packets. Re-arm tracing when its budget is exhausted. Exact counts vary, and recording traces can affect timing; use this lab to investigate behaviour rather than measure throughput.</p>
+<p>Type <code>quit</code> to leave the consoles, then stop the isolated lab:</p>
+<pre><code>sudo python3 lab.py --root &quot;$UET_LAB_ROOT&quot; down</code></pre>
+<h2>Looking ahead: hosting the UET transport inside VPP</h2>
+<p>A further architecture is under study: integrating the reference UET library into a VPP plugin so that VPP itself hosts the transport. In today&#x27;s lab, VPP delivers packets through shared memory to an external UET application, which runs the transport protocol.</p>
+<p>The proposed design would bring the reference implementation&#x27;s message handling, reliable packet delivery and transport security into the VPP process, with the goal of reusing the library unchanged. It would extend the packet-level visibility demonstrated here toward closer integration with the transport engine itself.</p>
+<h2>Lab files and sources</h2>
+<p><a href="https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-observability-lab.zip">Download the lab scripts</a> to repeat the experiments. The new scenarios also include <a href="https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-transport-results.txt">selected native CLI results</a> and <a href="https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-transport-evidence-20261109.zip">the complete transport experiment evidence</a>. You can also <a href="https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-debugging-results.txt">read the selected native CLI output</a> or <a href="https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-debugging-evidence-20261108.zip">download the complete test evidence</a>, including application logs and the changing <code>show uet</code> counters.</p>
+<p>The lab uses the <a href="https://github.com/ultraethernet/uet-ref-prov">public UEC reference implementation</a>, <a href="https://github.com/FDio/vpp/tree/v26.10">VPP 26.10</a> and libfabric 1.20.1. The test application calls the reference UET API directly; libfabric provides types and support functions.</p>
+<p>The download includes an application addressing addition and trace extensions for the UET and <code>nsim</code> plugins. The UET transport library and NIC shim remain unchanged. The README documents these additions, the exact source revisions and the tested environment: Ubuntu 26.04.1 on x86-64 Linux. The added reordering and QoS scenarios were also exercised in an ARM64 Linux VM; its overloaded run exhausted the retry budget, while its reordered and policed runs completed. A fresh minimal-VM installation has not been validated. Published evidence has lab-specific identities, machine names, home paths and runtime memory addresses anonymized. Raw packet hexdumps are omitted. Protocol sequence numbers, counters, timestamps and application outcomes are retained. The PCAP files in the transport archive contain only the synthetic UDP generator input.</p></article></main></body></html>

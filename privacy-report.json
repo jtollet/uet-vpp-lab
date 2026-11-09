@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-09",
+  "scope": "Public repository files and recursively inspected release archives",
+  "secret_scanner": {
+    "name": "Gitleaks",
+    "version": "8.30.1",
+    "findings": 0,
+    "archive_depth": 4,
+    "decoding_enabled": true
+  },
+  "pii_review": {
+    "findings": 0,
+    "checks": {
+      "files_inspected": 4029,
+      "text_files_inspected": 4002,
+      "archives_opened": 9,
+      "synthetic_pcaps_verified": 18
+    }
+  },
+  "sanitization": {
+    "home_path_replacements": 115,
+    "hostname_replacements": 56,
+    "identity_replacements": 62,
+    "email_replacements": 0,
+    "address_replacements": 195,
+    "process_id_replacements": 1644,
+    "packet_hexdump_lines_omitted": 52724,
+    "evidence_members_processed": 1977,
+    "verified_synthetic_generator_pcaps": 9
+  },
+  "integrity_checks": {
+    "runtime_scripts_and_patches_unchanged": true,
+    "transport_measurements_and_outcomes_preserved": true
+  },
+  "identity_note": "Only canonical public repository and download URLs contain the requested public account name."
+}

@@ -1,0 +1,469 @@
+VPP native CLI evidence: debugging UET
+
+
+Healthy attachment: show uet (while provider-ready yes)
+state enabled
+main-thread 0
+workers 1
+rx-placement current-worker
+owner-worker vpp_wk_0 (1)
+poll-calls 11104952
+tx-requests 203
+invalid-requests 0
+tx-completion-ring-full 0
+tx-ip4-table 0
+tx-ip6-table 0
+tx-packets 203
+tx-bytes 179516
+tx-completions 203
+rx-ip4-packets 203
+rx-ip4-bytes 179516
+rx-ip6-packets 0
+rx-ip6-bytes 0
+rx-udp4-packets 0
+rx-udp4-bytes 0
+rx-udp6-packets 0
+rx-udp6-bytes 0
+rx-delivered 203
+rx-ambiguous 0
+rx-ring-full 0
+rx-bad-chain 0
+rx-releases 203
+rx-invalid-releases 0
+rx-outstanding 0
+endpoint-registrations 1
+endpoint-collisions 0
+dma-authorized-clients 1
+dma-rejected-clients 0
+local-dispatch registered ip-protocol 253 udp-port 49150
+svm-state attached
+svm-segments 1
+svm-segment uet-obs-rg83xyrg-a
+svm-channels 1
+svm-abi 4.2
+svm-generation 1
+svm-queue-depth 256
+svm-dma-slot-count 256
+svm-dma-buffer-data-size 2048
+svm-dma-map-size 67108864
+svm-dma-socket /tmp/uet-obs-rg83xyrg/a/uet-dma.sock
+provider-ready yes
+provider-owner-pid <process-id>
+tx-pending 0
+tx-completions-pending 0
+rx-pending 0
+rx-release-pending 0
+application-0-segment uet-obs-rg83xyrg-a
+application-0-generation 1
+application-0-namespace 1
+application-0-channels 1
+application-0-queue-depth 256
+application-0-provider-ready yes
+application-0-pds-mode pds
+application-0-owner-pid <process-id>
+worker-0-thread vpp_wk_0 (1)
+worker-0-channel attached
+worker-0-tx-requests 203
+worker-0-tx-packets 203
+worker-0-rx-delivered 203
+worker-0-rx-ring-full 0
+
+
+MTU fault: show errors
+   Count                  Node                              Reason               Severity 
+       216             null-node                      blackholed packets           error  
+       404             ip4-input                 ip4 MTU exceeded and DF set       error  
+       404           ip4-icmp-error                 error message dropped          error  
+
+
+MTU fault: show uet (selected full counter fields)
+state enabled
+main-thread 0
+workers 1
+rx-placement current-worker
+poll-calls 33319176
+tx-requests 404
+invalid-requests 0
+tx-completion-ring-full 0
+tx-ip4-table 0
+tx-ip6-table 0
+tx-packets 404
+tx-bytes 447632
+tx-completions 404
+rx-ip4-packets 0
+rx-ip4-bytes 0
+rx-ip6-packets 0
+rx-ip6-bytes 0
+rx-udp4-packets 0
+rx-udp4-bytes 0
+rx-udp6-packets 0
+rx-udp6-bytes 0
+rx-delivered 0
+rx-ambiguous 0
+rx-ring-full 0
+rx-bad-chain 0
+rx-releases 0
+rx-invalid-releases 0
+rx-outstanding 0
+endpoint-registrations 0
+endpoint-collisions 0
+dma-authorized-clients 1
+dma-rejected-clients 0
+svm-state attached
+svm-segments 1
+svm-segment uet-obs-rg83xyrg-a
+svm-channels 1
+svm-abi 4.2
+svm-generation 1
+svm-queue-depth 256
+svm-dma-slot-count 256
+svm-dma-buffer-data-size 2048
+svm-dma-map-size 67108864
+svm-dma-socket /tmp/uet-obs-rg83xyrg/a/uet-dma.sock
+provider-ready no
+provider-owner-pid 0
+tx-pending 0
+tx-completions-pending 0
+rx-pending 0
+rx-release-pending 0
+application-0-segment uet-obs-rg83xyrg-a
+application-0-generation 1
+application-0-namespace 1
+application-0-channels 1
+application-0-queue-depth 256
+application-0-provider-ready no
+application-0-pds-mode pds
+application-0-owner-pid 0
+worker-0-channel attached
+worker-0-tx-requests 404
+worker-0-tx-packets 404
+worker-0-rx-delivered 0
+worker-0-rx-ring-full 0
+
+MTU fault: original native packet trace
+
+00:00:23:850598: uet-input
+  UET TX: worker 1 ip4/native length 1108 fib-table 0 id 1 segments 1 next 0 disposition routed
+  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ flags 0x04 RETX 0 SPDCID 65 PDC-info 0x0000 SYN 1 PSN 1432431193
+00:00:23:850603: ip4-lookup
+  fib 0 dpo-idx 2 flow hash: 0x00000000
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 64, length 1108, checksum 0xa985 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:23:850610: ip4-rewrite
+  tx_sw_if_index 0 dpo-idx 2 : ipv4 via 198.18.0.2 memif1/0: mtu:576 next:3 flags:[] 0200000000020200000000010800 flow hash: 0x00000403
+00:00:23:850613: ip4-icmp-error
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 64, length 1108, checksum 0xa985 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:23:850621: ip4-drop
+    fib:0 adj:2 flow:0x00000403
+  ICMP: 0.0.2.0 -> 198.18.0.1
+    tos 0x00, ttl 255, length 576, checksum 0xf1a9 dscp CS0 ecn NON_ECN
+    fragment id 0x0000
+  ICMP destination_unreachable fragmentation_needed_and_dont_fragment_set checksum 0xdba7
+    fib:0 adj:2 flow:0x00000403
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 64, length 1108, checksum 0xa985 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:23:850622: error-drop
+  rx:local0
+  rx:local0
+00:00:23:850624: drop
+  null-node: blackholed packets
+  ip4-input: ip4 MTU exceeded and DF set
+
+
+Latency without loss: original request
+
+00:00:06:287479: uet-input
+  UET TX: worker 1 ip4/native length 1108 fib-table 0 id 1 segments 1 next 0 disposition routed
+  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ flags 0x04 RETX 0 SPDCID 65 PDC-info 0x0000 SYN 1 PSN 221390863
+00:00:06:287483: ip4-lookup
+  fib 0 dpo-idx 2 flow hash: 0x00000000
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 64, length 1108, checksum 0xa985 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:287490: ip4-rewrite
+  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.2 memif1/0: mtu:1500 next:3 flags:[] 0200000000020200000000010800 flow hash: 0x00000000
+00:00:06:287493: memif1/0-output
+  memif1/0 flags 0x01080001
+  IP4: 02:00:00:00:00:01 -> 02:00:00:00:00:02
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:287496: nsim-output-feature
+  NSIM: tx time 6.568820 sw_if_index 1
+00:00:06:307497: nsim-wheel
+  NSIM: tx at 6.568820 next_index 0
+
+
+Latency without loss: retransmission
+
+00:00:06:292351: uet-input
+  UET TX: worker 1 ip4/native length 1108 fib-table 0 id 5 segments 1 next 0 disposition routed
+  198.18.0.1 -> 198.18.0.2 PDS ROD_REQ flags 0x1c RETX 1 SPDCID 65 PDC-info 0x0000 SYN 1 PSN 221390863
+00:00:06:292353: ip4-lookup
+  fib 0 dpo-idx 2 flow hash: 0x00000000
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 64, length 1108, checksum 0xa985 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:292353: ip4-rewrite
+  tx_sw_if_index 1 dpo-idx 2 : ipv4 via 198.18.0.2 memif1/0: mtu:1500 next:3 flags:[] 0200000000020200000000010800 flow hash: 0x00000000
+00:00:06:292353: memif1/0-output
+  memif1/0 flags 0x01080001
+  IP4: 02:00:00:00:00:01 -> 02:00:00:00:00:02
+  EXP1: 198.18.0.1 -> 198.18.0.2
+    tos 0x00, ttl 63, length 1108, checksum 0xaa85 dscp CS0 ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:292354: nsim-output-feature
+  NSIM: tx time 6.573677 sw_if_index 1
+00:00:06:312354: nsim-wheel
+  NSIM: tx at 6.573677 next_index 0
+
+
+Latency without loss: original ACK on the same VPP
+
+00:00:06:327607: memif-input
+  memif: hw_if_index 1 next-index 4
+    slot: ring 0
+00:00:06:327610: ethernet-input
+  frame: flags 0x1, hw-if-index 1, sw-if-index 1
+  IP4: 02:00:00:00:00:02 -> 02:00:00:00:00:01
+00:00:06:327613: ip4-input
+  EXP1: 198.18.0.2 -> 198.18.0.1
+    tos 0xb8, ttl 63, length 52, checksum 0xaded dscp EF ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:327614: ip4-lookup
+  fib 0 dpo-idx 7 flow hash: 0x00000000
+  EXP1: 198.18.0.2 -> 198.18.0.1
+    tos 0xb8, ttl 63, length 52, checksum 0xaded dscp EF ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:327615: ip4-receive
+    fib:0 adj:7 flow:0x00000000
+  EXP1: 198.18.0.2 -> 198.18.0.1
+    tos 0xb8, ttl 63, length 52, checksum 0xaded dscp EF ecn NON_ECN
+    fragment id 0x0000, flags DONT_FRAGMENT
+00:00:06:327616: uet4-ip-input
+  UET RX: worker 1 ip4/native length 52 sw_if_index 1 id 4294967500 segments 1 next 0 disposition delivered
+  198.18.0.2 -> 198.18.0.1 PDS ACK flags 0x00 RETX 0 SPDCID 65 DPDCID 65 CACK_PSN 221390863 ACK-offset-or-probe 0x0000
+
+
+Live UET progress, selected snapshots
+
+
+/tmp/uet-obs-rg83xyrg/results/1794146002147833648-loss-0-pulse-0-mtu-1500-delay-20-20-rto-5/live/0003-1.733s/a-show-uet.txt
+state enabled
+main-thread 0
+workers 1
+rx-placement current-worker
+poll-calls 15287405
+tx-requests 872
+invalid-requests 0
+tx-completion-ring-full 0
+tx-ip4-table 0
+tx-ip6-table 0
+tx-packets 872
+tx-bytes 543776
+tx-completions 872
+rx-ip4-packets 836
+rx-ip4-bytes 503888
+rx-ip6-packets 0
+rx-ip6-bytes 0
+rx-udp4-packets 0
+rx-udp4-bytes 0
+rx-udp6-packets 0
+rx-udp6-bytes 0
+rx-delivered 836
+rx-ambiguous 0
+rx-ring-full 0
+rx-bad-chain 0
+rx-releases 836
+rx-invalid-releases 0
+rx-outstanding 0
+endpoint-registrations 1
+endpoint-collisions 0
+dma-authorized-clients 1
+dma-rejected-clients 0
+svm-state attached
+svm-segments 1
+svm-segment uet-obs-rg83xyrg-a
+svm-channels 1
+svm-abi 4.2
+svm-generation 1
+svm-queue-depth 256
+svm-dma-slot-count 256
+svm-dma-buffer-data-size 2048
+svm-dma-map-size 67108864
+svm-dma-socket /tmp/uet-obs-rg83xyrg/a/uet-dma.sock
+provider-ready yes
+provider-owner-pid <process-id>
+tx-pending 0
+tx-completions-pending 0
+rx-pending 0
+rx-release-pending 0
+application-0-segment uet-obs-rg83xyrg-a
+application-0-generation 1
+application-0-namespace 1
+application-0-channels 1
+application-0-queue-depth 256
+application-0-provider-ready yes
+application-0-pds-mode pds
+application-0-owner-pid <process-id>
+worker-0-channel attached
+worker-0-tx-requests 872
+worker-0-tx-packets 872
+worker-0-rx-delivered 836
+worker-0-rx-ring-full 0
+
+/tmp/uet-obs-rg83xyrg/results/1794146002147833648-loss-0-pulse-0-mtu-1500-delay-20-20-rto-5/live/0004-2.241s/a-show-uet.txt
+state enabled
+main-thread 0
+workers 1
+rx-placement current-worker
+poll-calls 19550496
+tx-requests 1740
+invalid-requests 0
+tx-completion-ring-full 0
+tx-ip4-table 0
+tx-ip6-table 0
+tx-packets 1740
+tx-bytes 1066224
+tx-completions 1740
+rx-ip4-packets 1704
+rx-ip4-bytes 1026336
+rx-ip6-packets 0
+rx-ip6-bytes 0
+rx-udp4-packets 0
+rx-udp4-bytes 0
+rx-udp6-packets 0
+rx-udp6-bytes 0
+rx-delivered 1704
+rx-ambiguous 0
+rx-ring-full 0
+rx-bad-chain 0
+rx-releases 1704
+rx-invalid-releases 0
+rx-outstanding 0
+endpoint-registrations 1
+endpoint-collisions 0
+dma-authorized-clients 1
+dma-rejected-clients 0
+svm-state attached
+svm-segments 1
+svm-segment uet-obs-rg83xyrg-a
+svm-channels 1
+svm-abi 4.2
+svm-generation 1
+svm-queue-depth 256
+svm-dma-slot-count 256
+svm-dma-buffer-data-size 2048
+svm-dma-map-size 67108864
+svm-dma-socket /tmp/uet-obs-rg83xyrg/a/uet-dma.sock
+provider-ready yes
+provider-owner-pid <process-id>
+tx-pending 0
+tx-completions-pending 0
+rx-pending 0
+rx-release-pending 0
+application-0-segment uet-obs-rg83xyrg-a
+application-0-generation 1
+application-0-namespace 1
+application-0-channels 1
+application-0-queue-depth 256
+application-0-provider-ready yes
+application-0-pds-mode pds
+application-0-owner-pid <process-id>
+worker-0-channel attached
+worker-0-tx-requests 1740
+worker-0-tx-packets 1740
+worker-0-rx-delivered 1704
+worker-0-rx-ring-full 0
+
+/tmp/uet-obs-rg83xyrg/results/1794146002147833648-loss-0-pulse-0-mtu-1500-delay-20-20-rto-5/live/0005-2.749s/a-show-uet.txt
+state enabled
+main-thread 0
+workers 1
+rx-placement current-worker
+poll-calls 23794459
+tx-requests 2613
+invalid-requests 0
+tx-completion-ring-full 0
+tx-ip4-table 0
+tx-ip6-table 0
+tx-packets 2613
+tx-bytes 1593156
+tx-completions 2613
+rx-ip4-packets 2577
+rx-ip4-bytes 1553268
+rx-ip6-packets 0
+rx-ip6-bytes 0
+rx-udp4-packets 0
+rx-udp4-bytes 0
+rx-udp6-packets 0
+rx-udp6-bytes 0
+rx-delivered 2577
+rx-ambiguous 0
+rx-ring-full 0
+rx-bad-chain 0
+rx-releases 2577
+rx-invalid-releases 0
+rx-outstanding 0
+endpoint-registrations 1
+endpoint-collisions 0
+dma-authorized-clients 1
+dma-rejected-clients 0
+svm-state attached
+svm-segments 1
+svm-segment uet-obs-rg83xyrg-a
+svm-channels 1
+svm-abi 4.2
+svm-generation 1
+svm-queue-depth 256
+svm-dma-slot-count 256
+svm-dma-buffer-data-size 2048
+svm-dma-map-size 67108864
+svm-dma-socket /tmp/uet-obs-rg83xyrg/a/uet-dma.sock
+provider-ready yes
+provider-owner-pid <process-id>
+tx-pending 0
+tx-completions-pending 0
+rx-pending 0
+rx-release-pending 0
+application-0-segment uet-obs-rg83xyrg-a
+application-0-generation 1
+application-0-namespace 1
+application-0-channels 1
+application-0-queue-depth 256
+application-0-provider-ready yes
+application-0-pds-mode pds
+application-0-owner-pid <process-id>
+worker-0-channel attached
+worker-0-tx-requests 2613
+worker-0-tx-packets 2613
+worker-0-rx-delivered 2577
+worker-0-rx-ring-full 0
+
+Scenario checks (warning counts are PDS log lines):
+
+
+{"label": "baseline-or-delay-restored", "size": 4096, "iterations": 20, "timeout_ms": 5, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 0, "server": 0}}
+VPP A TX packets: 203
+
+{"label": "latency-short-timeout", "size": 4096, "iterations": 20, "timeout_ms": 5, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 2560, "server": 2560}}
+VPP A TX packets: 2763
+
+{"label": "latency-long-timeout", "size": 4096, "iterations": 20, "timeout_ms": 100, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 0, "server": 0}}
+VPP A TX packets: 203
+
+{"label": "baseline-or-delay-restored", "size": 4096, "iterations": 20, "timeout_ms": 5, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 0, "server": 0}}
+VPP A TX packets: 203
+
+{"label": "mtu-small-probe", "size": 64, "iterations": 20, "timeout_ms": 5, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 0, "server": 0}}
+VPP A TX packets: 80
+
+{"label": "mtu-failure", "size": 4096, "iterations": 1, "timeout_ms": 5, "outcome": "application_error", "client_rc": 255, "server_rc": -15, "terminated_by_harness": ["server"], "pds_retransmit_warning_lines": {"client": 400, "server": 0}}
+VPP A TX packets: 404
+
+{"label": "mtu-repaired", "size": 4096, "iterations": 20, "timeout_ms": 5, "outcome": "completed", "client_rc": 0, "server_rc": 0, "terminated_by_harness": [], "pds_retransmit_warning_lines": {"client": 0, "server": 0}}
+VPP A TX packets: 203
