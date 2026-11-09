@@ -11,8 +11,8 @@
   "pii_review": {
     "findings": 0,
     "checks": {
-      "files_inspected": 4029,
-      "text_files_inspected": 4002,
+      "files_inspected": 4034,
+      "text_files_inspected": 4007,
       "archives_opened": 9,
       "synthetic_pcaps_verified": 18
     }
@@ -39,5 +39,6 @@
       "context": "Acknowledgment for public upstream patch reviews and reference implementation guidance",
       "authorization": "Explicit author request"
     }
-  ]
+  ],
+  "validation_note": "The fresh-VM report publishes only allowlisted environment, source and experiment metrics; VM keys, cloud-init data and raw build logs are excluded."
 }

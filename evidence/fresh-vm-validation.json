@@ -1,0 +1,1033 @@
+{
+  "date": "2026-11-09",
+  "environment": {
+    "distribution": "Ubuntu 24.04.5 LTS",
+    "kernel": "6.8.0-147-generic",
+    "architecture": "x86_64",
+    "virtual_cpus": 4,
+    "allocated_memory_gib": 8,
+    "virtual_disk_gib": 40,
+    "no_host_filesystem_shares": true,
+    "preinstalled": {
+      "vpp": false,
+      "vpp_external_prefix": false,
+      "cmake": false,
+      "git": true
+    },
+    "base_image_url": "https://cloud-images.ubuntu.com/releases/24.04/release/ubuntu-24.04-server-cloudimg-amd64.img",
+    "base_image_sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
+  },
+  "build": {
+    "recipe_revision": "6a04571b6b1b488aa5d0f87577617e27c725e7aa",
+    "recipe_sha256": {
+      "build.sh": "9f3584126e087458d4ac9556df31bd1471458a4f380bab27c63f20a1a55a1dbd",
+      "lab.py": "105481ec364c5a83fc403bb5b4e513aa7c23dd10a96ea7f733221676aaaeee42",
+      "transport_scenarios.py": "4059a3dd4a5627b8303f79b3cdd221b57b21174d016bdd85e8325f4721afaf1c",
+      "check_trace_format.py": "157e2dfda7e0344c8e30d15d45ba66867d7500471521dde4afcf6b6fd1a7d9f9",
+      "peer-identity.patch": "8f8bfd1b7cbf64f2ee921c8b186ce39ef725afd4cbf758c8e5d59cca8c25dfdb",
+      "vpp-pds-trace.patch": "e6ff3a91776e1b926c9144a2a45bc223e288f6c0c7b38814a68618659309c0c0",
+      "nsim-trace.patch": "c77cbe281129d2dbdbddce37175f0e536720a8ae698554679156a94842c0b3c6"
+    },
+    "dependency_installer": "UET_LAB_INSTALL_DEPS=1",
+    "parallel_jobs": 4,
+    "extra_manual_dependency_installation": false,
+    "completed": true
+  },
+  "sources": {
+    "vpp": {
+      "revision": "4acb320269bc4f3533e35c80afedac38853b2f60",
+      "tracked_files_unchanged": true
+    },
+    "uet-ref-prov": {
+      "revision": "5b4e0491329b8e28764bca6847e2f6a0eaa84b9b",
+      "tracked_files_unchanged": true
+    },
+    "libfabric": {
+      "revision": "e43589a5113ad3db0a18a6a1a02b6e6f4ee317d6",
+      "tracked_files_unchanged": true
+    }
+  },
+  "libvppuet_sha256": "8eb979e6566bdda561ecced4da743a1cdd76ae7980c4b8e119a9281faa8f1af9",
+  "formatter_check": {
+    "address_sanitizer": true,
+    "undefined_behavior_sanitizer": true,
+    "result": "passed"
+  },
+  "runs": [
+    {
+      "name": "baseline",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "loss",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 1000,
+        "size": 4096,
+        "drop_fraction": 0.01,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 379,
+        "server": 299
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 98
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 17,
+          "bad_generation": 17
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "mtu-small",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 64,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 576,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "mtu-large",
+      "expected_outcome": "application_error",
+      "observed_outcome": "application_error",
+      "client_rc": 255,
+      "server_rc": -15,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 576,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 400,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "mtu-restored",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "delay-low-rto",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 20.0,
+        "reverse_delay_ms": 20.0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 2560,
+        "server": 2560
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 958,
+          "median": 20002.0,
+          "p95": 20014,
+          "max": 21105
+        },
+        "ROD_REQ": {
+          "count": 1042,
+          "median": 20003.0,
+          "p95": 20009,
+          "max": 22881
+        }
+      }
+    },
+    {
+      "name": "delay-adjusted-rto",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 20.0,
+        "reverse_delay_ms": 20.0,
+        "timeout_ms": 100,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 43,
+          "median": 20002,
+          "p95": 20012,
+          "max": 21976
+        },
+        "ROD_REQ": {
+          "count": 160,
+          "median": 20002.0,
+          "p95": 20010,
+          "max": 21968
+        }
+      }
+    },
+    {
+      "name": "delay-removed",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 20,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 2000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "reorder-control",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 30,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 4000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 3,
+        "server": 3
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "reorder",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 30,
+        "size": 4096,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0.25,
+        "reorder_delay_ms": 1.0,
+        "reverse_bandwidth_mbps": 1000,
+        "reverse_buffer_ms": 0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 4000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 82,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 5,
+          "bad_generation": 5
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 35,
+      "return_wheel_wait_us": {}
+    },
+    {
+      "name": "return-quiet-1",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 30,
+        "size": 64,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 4000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 407,
+          "max": 419
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 698.0,
+          "p95": 700,
+          "max": 700
+        }
+      }
+    },
+    {
+      "name": "return-loaded-1",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 30,
+        "size": 64,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 0,
+        "trace_packets_per_input": 4000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 483,
+        "server": 658
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 9400,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {},
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 126,
+          "median": 20064.0,
+          "p95": 20068,
+          "max": 21080
+        },
+        "ROD_REQ": {
+          "count": 187,
+          "median": 20073,
+          "p95": 20076,
+          "max": 21166
+        }
+      }
+    },
+    {
+      "name": "return-policed-1",
+      "expected_outcome": "completed",
+      "observed_outcome": "completed",
+      "client_rc": 0,
+      "server_rc": 0,
+      "settings": {
+        "iterations": 30,
+        "size": 64,
+        "drop_fraction": 0.0,
+        "pulse_ms": 0.0,
+        "mtu": 1500,
+        "delay_ms": 0.1,
+        "reverse_delay_ms": 0.1,
+        "timeout_ms": 5,
+        "max_tx_retries": 100,
+        "reorder_fraction": 0,
+        "reorder_delay_ms": 1,
+        "reverse_bandwidth_mbps": 40.0,
+        "reverse_buffer_ms": 20.0,
+        "background_pps": 5000.0,
+        "background_policer_mbps": 6.0,
+        "trace_packets_per_input": 4000
+      },
+      "pds_retransmit_warning_lines": {
+        "client": 0,
+        "server": 0
+      },
+      "nsim": {
+        "a": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        },
+        "b": {
+          "reordered": 0,
+          "queue_drops": 0,
+          "injected_loss": 0
+        }
+      },
+      "policer_packets": {
+        "conform": 1710,
+        "exceed": 0,
+        "violate": 15515
+      },
+      "application_messages": {
+        "client": {
+          "no_match": 0,
+          "bad_generation": 0
+        },
+        "server": {
+          "no_match": 0,
+          "bad_generation": 0
+        }
+      },
+      "original_request_arrival_inversions": 0,
+      "return_wheel_wait_us": {
+        "ACK": {
+          "count": 60,
+          "median": 402.0,
+          "p95": 657,
+          "max": 700
+        },
+        "ROD_REQ": {
+          "count": 60,
+          "median": 698.0,
+          "p95": 996,
+          "max": 1041
+        }
+      }
+    }
+  ],
+  "buffer_ownership_audit": {
+    "baseline": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "loss": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "mtu-small": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "mtu-restored": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "delay-low-rto": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "delay-adjusted-rto": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "delay-removed": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "reorder-control": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "reorder": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "return-quiet-1": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "return-loaded-1": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    },
+    "return-policed-1": {
+      "a": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      },
+      "b": {
+        "invalid-requests": 0,
+        "tx-completion-ring-full": 0,
+        "rx-ring-full": 0,
+        "rx-invalid-releases": 0,
+        "rx-outstanding": 0
+      }
+    }
+  },
+  "cleanup": {
+    "launcher_return_code": 0,
+    "vpp_processes_remaining": 0
+  },
+  "limitations": [
+    "Functional validation with graph tracing enabled; not a throughput benchmark.",
+    "One execution per fresh-VM scenario; original x86 repeat measurements remain separate.",
+    "The fresh-VM reorder control logged three PDS timeout warnings on each application despite zero nsim loss; VM scheduling and tracing can affect timing."
+  ],
+  "all_expected_outcomes_observed": true
+}

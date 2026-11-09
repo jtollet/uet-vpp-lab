@@ -5,8 +5,8 @@ native counters and packet traces, then injecting network conditions to
 explain the reference transport's behavior.
 
 **[Read the hands-on article](docs/article.md)** ·
-**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-article-and-lab.zip)** ·
-**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-observability-lab.zip)**
+**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-article-and-lab.zip)** ·
+**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-observability-lab.zip)**
 
 Two UET application processes exchange packets with two VPP instances over
 shared memory. A virtual memif link joins the VPPs. UET terminates in the
@@ -27,10 +27,10 @@ Eight GiB RAM is a reasonable starting allocation. All source dependencies
 are public and pinned in the [lab README](lab/README.md).
 
 ```sh
-git clone https://github.com/jtollet/uet-vpp-lab.git
-cd uet-vpp-lab/lab
 sudo apt-get update
 sudo apt-get install -y git build-essential python3
+git clone https://github.com/jtollet/uet-vpp-lab.git
+cd uet-vpp-lab/lab
 export UET_LAB_ROOT="$HOME/uet-observability"
 UET_LAB_INSTALL_DEPS=1 bash build.sh "$UET_LAB_ROOT"
 sudo python3 lab.py --root "$UET_LAB_ROOT" up
@@ -58,14 +58,18 @@ addressing and trace-instrumentation patches are described in the lab README.
 Validation includes 15 x86-64 executions of the extended scenarios, including
 a comparison with applications restricted to the same four CPUs as VPP.
 The added scenarios were also exercised in an existing ARM64 Linux VM.
-A fresh minimal-VM dependency installation has not been validated.
+The complete dependency installation, build and 13 scenario executions were
+also validated in a fresh Ubuntu 24.04.5 LTS x86-64 VM with four virtual CPUs,
+eight GiB RAM and a 40 GiB disk. No extra manual dependency installation was
+needed. See the [fresh-VM validation report](evidence/fresh-vm-validation.json).
 
 The exercises demonstrate reliable untagged messaging in ROD mode and the
 effect of network conditions. They do not validate all UET delivery modes,
 security, multipath or the endpoint congestion-control algorithms. The QoS
 example limits background ingress; it is not a strict-priority output scheduler.
-The reordered run's `No Match` and `Bad Generation` responses are documented
-alongside its successful final application outcome.
+The reordered run's `No Match` and `Bad Generation` responses trigger
+message-level recovery, independently of the PDS retransmission warning count.
+See the [trace and source explanation](evidence/reorder-recovery.md).
 
 ## Evidence and downloads
 
@@ -73,9 +77,9 @@ alongside its successful final application outcome.
 - [Selected reorder and QoS CLI output](evidence/vpp-cli-transport-results.txt).
 - [Extended x86-64 measurements](evidence/transport-validation-x86-20261109.json).
 - [Final source and buffer-ownership audit](evidence/transport-final-audit.json).
-- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-native-cli-evidence-20261108.zip).
-- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-debugging-evidence-20261108.zip).
-- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-transport-evidence-20261109.zip).
+- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-native-cli-evidence-20261108.zip).
+- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-debugging-evidence-20261108.zip).
+- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-transport-evidence-20261109.zip).
 
 Published evidence is sanitized as described in [PRIVACY.md](PRIVACY.md).
 Protocol sequence numbers, counters, timing measurements and application

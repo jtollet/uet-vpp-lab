@@ -41,7 +41,8 @@ def main():
         for name in EVIDENCE + ['uet-vpp-observability-lab.zip']:
             add(bundle, 'uet-vpp-article/' + name, (OUTPUT / name).read_bytes())
         for name in ('vpp-cli-debugging-results.txt', 'vpp-cli-transport-results.txt',
-                     'transport-validation-x86-20261109.json'):
+                     'transport-validation-x86-20261109.json',
+                     'reorder-recovery.md', 'fresh-vm-validation.json'):
             add(bundle, 'uet-vpp-article/' + name, (ROOT / 'evidence' / name).read_bytes())
         for name in NOTICES:
             add(bundle, 'uet-vpp-article/' + name, (ROOT / name).read_bytes())

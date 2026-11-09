@@ -33,7 +33,16 @@ also passed with the applications restricted to those same four cores.
 The added reorder and QoS scenarios were also exercised in an existing
 ARM64 Lima VM (six logical CPUs, four GiB RAM). That VM completed the clean,
 reordered and policed cases; its persistent-overload case exhausted the retry
-budget. A fresh minimal-VM package installation has not been validated.
+budget. The full public dependency-installation and build recipe, followed
+by 13 scenario executions, also passed in a fresh Ubuntu 24.04.5 LTS x86-64
+VM with four virtual CPUs, eight GiB RAM and a 40 GiB disk. VPP, its external
+dependency prefix and CMake were absent before installation. No extra manual
+dependency installation was needed. Counters for invalid requests, full
+rings, invalid releases and outstanding RX buffers were zero at the end
+of all 12 successful exchanges; the intentional MTU failure was followed
+by a lab restart. These are functional checks with tracing enabled. VM
+scheduling can cause timeout warnings even in a control run; exact counts
+and timings are not acceptance thresholds or performance guarantees.
 
 Build tooling and dependencies can be installed using VPP's official
 `install-dep` target, as shown below. These commands install packages;
