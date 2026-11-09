@@ -32,5 +32,12 @@
     "runtime_scripts_and_patches_unchanged": true,
     "transport_measurements_and_outcomes_preserved": true
   },
-  "identity_note": "Only canonical public repository and download URLs contain the requested public account name."
+  "identity_note": "Canonical repository/download URLs identify the public GitHub account. The acknowledgments intentionally name Eric Davis, as explicitly requested. No personal contact details or private correspondence are included.",
+  "intentional_public_attribution": [
+    {
+      "name": "Eric Davis",
+      "context": "Acknowledgment for public upstream patch reviews and reference implementation guidance",
+      "authorization": "Explicit author request"
+    }
+  ]
 }

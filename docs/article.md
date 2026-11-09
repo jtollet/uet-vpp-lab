@@ -23,7 +23,7 @@ The UET protocol runs in the applications. VPP handles their network packets and
 
 The commands below use Ubuntu on an x86-64 machine with at least four available logical CPUs and sudo access. The downloadable scripts build the test applications and VPP 26.10, including the UET trace decoding shown below. The lab README contains the full setup details.
 
-[Download and unpack the lab files](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-observability-lab.zip). From their directory, build and start the network:
+[Download and unpack the lab files](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-observability-lab.zip). From their directory, build and start the network:
 
 ```sh
 sudo apt-get update
@@ -443,9 +443,13 @@ The proposed design would bring the reference implementation's message handling,
 
 # Lab files and sources
 
-[Download the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-observability-lab.zip) to repeat the experiments. The new scenarios also include [selected native CLI results](https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-transport-results.txt) and [the complete transport experiment evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-transport-evidence-20261109.zip). You can also [read the selected native CLI output](https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-debugging-results.txt) or [download the complete test evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-debugging-evidence-20261108.zip), including application logs and the changing `show uet` counters.
+[Download the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-observability-lab.zip) to repeat the experiments. The new scenarios also include [selected native CLI results](https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-transport-results.txt) and [the complete transport experiment evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-transport-evidence-20261109.zip). You can also [read the selected native CLI output](https://github.com/jtollet/uet-vpp-lab/blob/main/evidence/vpp-cli-debugging-results.txt) or [download the complete test evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-debugging-evidence-20261108.zip), including application logs and the changing `show uet` counters.
 
 The lab uses the [public UEC reference implementation](https://github.com/ultraethernet/uet-ref-prov), [VPP 26.10](https://github.com/FDio/vpp/tree/v26.10) and libfabric 1.20.1. The test application calls the reference UET API directly; libfabric provides types and support functions.
 
 The download includes an application addressing addition and trace extensions for the UET and `nsim` plugins. The UET transport library and NIC shim remain unchanged. The README documents these additions, the exact source revisions and the tested environment: Ubuntu 26.04.1 on x86-64 Linux. The added reordering and QoS scenarios were also exercised in an ARM64 Linux VM; its overloaded run exhausted the retry budget, while its reordered and policed runs completed. A fresh minimal-VM installation has not been validated.
 Published evidence has lab-specific identities, machine names, home paths and runtime memory addresses anonymized. Raw packet hexdumps are omitted. Protocol sequence numbers, counters, timestamps and application outcomes are retained. The PCAP files in the transport archive contain only the synthetic UDP generator input.
+
+# Acknowledgments
+
+Many thanks to Eric Davis for reviewing the upstream patches and for his helpful guidance on the UET reference implementation.

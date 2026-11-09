@@ -5,8 +5,8 @@ native counters and packet traces, then injecting network conditions to
 explain the reference transport's behavior.
 
 **[Read the hands-on article](docs/article.md)** ·
-**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-article-and-lab.zip)** ·
-**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-observability-lab.zip)**
+**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-article-and-lab.zip)** ·
+**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-observability-lab.zip)**
 
 Two UET application processes exchange packets with two VPP instances over
 shared memory. A virtual memif link joins the VPPs. UET terminates in the
@@ -73,9 +73,9 @@ alongside its successful final application outcome.
 - [Selected reorder and QoS CLI output](evidence/vpp-cli-transport-results.txt).
 - [Extended x86-64 measurements](evidence/transport-validation-x86-20261109.json).
 - [Final source and buffer-ownership audit](evidence/transport-final-audit.json).
-- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-native-cli-evidence-20261108.zip).
-- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-debugging-evidence-20261108.zip).
-- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.0/uet-vpp-transport-evidence-20261109.zip).
+- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-native-cli-evidence-20261108.zip).
+- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-debugging-evidence-20261108.zip).
+- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.1/uet-vpp-transport-evidence-20261109.zip).
 
 Published evidence is sanitized as described in [PRIVACY.md](PRIVACY.md).
 Protocol sequence numbers, counters, timing measurements and application
