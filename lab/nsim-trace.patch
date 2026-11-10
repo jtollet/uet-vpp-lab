@@ -1,3 +1,8 @@
+VPP 26.10 companion adaptation. Wheel-departure tracing was merged into VPP
+master on 10 November 2026: https://gerrit.fd.io/r/c/vpp/+/47531
+The simulated-drop labeling correction was already fixed separately in master.
+Keep this patch for the pinned v26.10 lab; do not apply it to current master.
+
 --- a/nsim/node.c
 +++ b/nsim/node.c
 @@ -149,0 +150 @@

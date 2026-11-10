@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-09",
+  "date": "2026-11-10",
   "scope": "Public repository files and recursively inspected release archives",
   "secret_scanner": {
     "name": "Gitleaks",
@@ -29,16 +29,23 @@
     "verified_synthetic_generator_pcaps": 9
   },
   "integrity_checks": {
-    "runtime_scripts_and_patches_unchanged": true,
-    "transport_measurements_and_outcomes_preserved": true
+    "transport_measurements_and_outcomes_preserved": true,
+    "runtime_behavior_unchanged": true,
+    "patch_hunks_unchanged": true
   },
-  "identity_note": "Canonical repository/download URLs identify the public GitHub account. The acknowledgments intentionally name Eric Davis, as explicitly requested. No personal contact details or private correspondence are included.",
+  "identity_note": "Canonical repository/download URLs identify the public GitHub account. The acknowledgments intentionally name Eric Davis and Florin Coras, as explicitly requested. No personal contact details or private correspondence are included.",
   "intentional_public_attribution": [
     {
       "name": "Eric Davis",
       "context": "Acknowledgment for public upstream patch reviews and reference implementation guidance",
       "authorization": "Explicit author request"
+    },
+    {
+      "name": "Florin Coras",
+      "context": "Acknowledgment for public review and merge of the VPP nsim tracing enhancement",
+      "authorization": "Explicit author request"
     }
   ],
-  "validation_note": "The fresh-VM report publishes only allowlisted environment, source and experiment metrics; VM keys, cloud-init data and raw build logs are excluded."
+  "validation_note": "The fresh-VM report publishes only allowlisted environment, source and experiment metrics; VM keys, cloud-init data and raw build logs are excluded.",
+  "update_note": "The 10 November update documents the nsim upstream merge and adds public credit. Only documentation, packaging dates and build/patch comments changed; the pinned sources and runtime code are unchanged. Existing validation evidence is retained without alteration."
 }

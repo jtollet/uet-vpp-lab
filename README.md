@@ -5,8 +5,8 @@ native counters and packet traces, then injecting network conditions to
 explain the reference transport's behavior.
 
 **[Read the hands-on article](docs/article.md)** ·
-**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-article-and-lab.zip)** ·
-**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-observability-lab.zip)**
+**[Download the complete article and lab](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.3/uet-vpp-article-and-lab.zip)** ·
+**[Download just the lab scripts](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.3/uet-vpp-observability-lab.zip)**
 
 Two UET application processes exchange packets with two VPP instances over
 shared memory. A virtual memif link joins the VPPs. UET terminates in the
@@ -55,6 +55,12 @@ libfabric provides types and support functions. This lab uses no verbs API.
 The transport library and NIC shim remain unchanged. The supplied application
 addressing and trace-instrumentation patches are described in the lab README.
 
+On 10 November 2026, Florin Coras reviewed and merged the
+[nsim wheel-departure tracing enhancement](https://gerrit.fd.io/r/c/vpp/+/47531)
+into VPP `master`. The validated lab remains on VPP 26.10, so its companion
+keeps the version-specific adaptation. See the
+[upstream status and patch scope](lab/README.md#upstream-status--10-november-2026).
+
 Validation includes 15 x86-64 executions of the extended scenarios, including
 a comparison with applications restricted to the same four CPUs as VPP.
 The added scenarios were also exercised in an existing ARM64 Linux VM.
@@ -77,9 +83,9 @@ See the [trace and source explanation](evidence/reorder-recovery.md).
 - [Selected reorder and QoS CLI output](evidence/vpp-cli-transport-results.txt).
 - [Extended x86-64 measurements](evidence/transport-validation-x86-20261109.json).
 - [Final source and buffer-ownership audit](evidence/transport-final-audit.json).
-- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-native-cli-evidence-20261108.zip).
-- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-debugging-evidence-20261108.zip).
-- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.2/uet-vpp-transport-evidence-20261109.zip).
+- [Loss and baseline evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.3/uet-vpp-native-cli-evidence-20261108.zip).
+- [MTU and latency evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.3/uet-vpp-debugging-evidence-20261108.zip).
+- [Reorder and QoS evidence](https://github.com/jtollet/uet-vpp-lab/releases/download/v1.0.3/uet-vpp-transport-evidence-20261109.zip).
 
 Published evidence is sanitized as described in [PRIVACY.md](PRIVACY.md).
 Protocol sequence numbers, counters, timing measurements and application

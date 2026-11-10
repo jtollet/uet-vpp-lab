@@ -94,9 +94,25 @@ The companion supplies three explicit additions, applied to generated copies:
 
 `build.sh` builds the UET and nsim copies under `uet-trace-plugin-build`.
 Its plugin directory precedes VPP's stock plugin directory. It also builds and
-loads the upstream `tracepath` and `policer` plugins. The additions are included openly in
-this archive; they are not claimed to be merged upstream. They change trace
-instrumentation, not the transport algorithms or the loss model.
+loads the upstream `tracepath` and `policer` plugins. These additions change
+application addressing and trace instrumentation, not the transport algorithms
+or the loss model.
+
+### Upstream status — 10 November 2026
+
+Florin Coras reviewed and merged the
+[nsim wheel-departure tracing change](https://gerrit.fd.io/r/c/vpp/+/47531)
+into VPP `master` on 10 November 2026. It records when queued packets leave
+nsim and propagates tracing to downstream nodes, including packets released
+from the reorder wheel.
+
+This lab remains pinned to the validated VPP 26.10 release, which predates
+that change. Keep `nsim-trace.patch` when following this recipe: it contains
+the VPP 26.10 adaptation and the simulated-drop labeling correction that was
+already fixed separately in `master`. The supplied patch targets 26.10 and
+should not be applied to current `master`. The UET PDS trace decoding and
+application peer-addressing additions remain companion changes. The source
+versions, runtime behavior and published experiment results are unchanged.
 
 ## Start
 

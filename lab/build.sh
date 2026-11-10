@@ -65,6 +65,8 @@ sdk_config=$(find "$lab_root/vpp-install" -name VPPConfig.cmake -print -quit)
 mkdir -p "$lab_root/plugin-example"
 cp -a "$lab_root/uet-ref-prov/vpp-plugin/." "$lab_root/plugin-example/"
 patch --batch -s -d "$lab_root/plugin-example" -p1 -i "$recipe_dir/vpp-pds-trace.patch"
+# Wheel-departure tracing is upstream in VPP master (Gerrit 47531, 2026-11-10).
+# This recipe is pinned to v26.10 and still needs its companion adaptation.
 cp -a "$lab_root/vpp/src/plugins/nsim" "$lab_root/plugin-example/"
 patch --batch -s -d "$lab_root/plugin-example" -p1 -i "$recipe_dir/nsim-trace.patch"
 printf '\nadd_subdirectory(nsim)\n' >> "$lab_root/plugin-example/CMakeLists.txt"

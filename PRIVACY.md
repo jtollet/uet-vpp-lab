@@ -33,8 +33,8 @@ identity and a non-personal GitHub no-reply address. Upstream organizational
 copyright and license notices remain intact.
 
 At the author's explicit request, the article acknowledgments name Eric Davis
-in his public upstream role. This intentional public credit contains no
-contact details or private correspondence.
+and Florin Coras in their public upstream roles. This intentional public credit
+contains no contact details or private correspondence.
 
 These checks describe the published artifacts. New experiment runs naturally
 generate local paths, process identifiers and runtime details on the reader's

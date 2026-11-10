@@ -18,7 +18,7 @@ NOTICES = ['LICENSE', 'NOTICE', 'PRIVACY.md', 'privacy-report.json',
 
 
 def add(bundle, name, data):
-    item = ZipInfo(name, date_time=(2026, 11, 9, 0, 0, 0))
+    item = ZipInfo(name, date_time=(2026, 11, 10, 0, 0, 0))
     item.compress_type = ZIP_DEFLATED
     item.create_system = 3
     item.external_attr = (0o100755 if name.endswith('.sh') else 0o100644) << 16
